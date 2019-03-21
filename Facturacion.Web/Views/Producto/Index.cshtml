@@ -1,0 +1,446 @@
+﻿@{
+    ViewBag.Title = "Producto";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row gutter-xs">
+    <div class="col-xs-12">
+        <div id="divaccordion" class="panel-group">
+            <div class="panel panel-default filter">
+                <div class="panel-heading filterchild">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#divaccordion" href="#divfiltro" class="collapsed" aria-expanded="false">
+                            Busqueda
+                            <i class="icon icon-search pull-right"> </i>
+                        </a>
+                    </h4>
+                </div>
+                <div id="divfiltro" class="panel-collapse collapse" aria-expanded="false">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-xs-10">
+                                <input type="text" id="txt_filtro" name="txt_filtro" class="form-control" placeholder="Buscar por codigo, nombre" />
+                            </div>
+                            <div class="col-xs-2">
+                                <input type="button" id="btn_filtrar" name="btn_filtrar" value="Buscar" class="btn btn-success pull-right" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row gutter-xs">
+    <div class="col-xs-12">
+        <div class="card">
+            <div class="card-body">
+                <table id="tblproducto" class="table table-bordered table-striped table-responsive" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Producto</th>
+                            <th>Unidad</th>
+                            <th>Exonerado/Gravado</th>
+                            <th>Precio</th>
+                            <th>Stock</th>
+                            <th>Edición</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@{
+    Html.RenderPartial("_Registro");
+}
+
+<script type="text/javascript" src="@Url.Content("~/Scripts/Utils.js")"></script>
+<script type="text/javascript">
+    var $tblproducto = $("#tblproducto");
+    var PAGE_URL = "@Url.Content("~/Producto")";
+    var VALORCOMBO = "0";
+    var TEXTOCOMBO = "Seleccione";
+    var TITULOVENTANA = "@ViewBag.Title";
+    var _matriz = [];
+    var _RegistroPorPagina = 100;
+    var _Indice = 0;
+    window.onload = function () {
+        document.getElementById("spantituloventana").innerHTML = TITULOVENTANA;
+        if (window.localStorage.getItem("ParametrosSystema") === null) {
+            ListarParametrosSystema();
+        } else {
+            CargarCombos();
+        }
+        ValidacionFormulario();
+        ListarCategoria();
+        document.getElementById("lnkAgregar").addEventListener("click", function (e) {
+            e.preventDefault();
+            ResetFomulario("frm_insert");
+            if (document.getElementById("hdn_idproducto").value == "0") document.getElementById("dialog_titulo").innerHTML = "Producto";
+            else document.getElementById("dialog_titulo").innerHTML = "Editar Producto";
+
+            $("#dialog_nuevo").modal("show");
+            $("#dialog_nuevo").appendTo("body");
+        }, false);
+        document.getElementById("btn_insertar").addEventListener("click", function (e) {
+            e.preventDefault();
+            InsertarProducto();
+        }, false);
+        document.getElementById("btn_filtrar").addEventListener("click", function () {
+            //PaginarProducto();
+			FiltrarMatriz();
+        }, false); 
+        PaginarProducto();
+
+    };
+    function ListarParametrosSystema() {
+        var urlAction = PAGE_URL + '/ListarParametros';
+        ajax(urlAction, "get", "json", function (response) {
+            if (response != "") {
+                window.localStorage.setItem("ParametrosSystema", JSON.stringify(response.d));
+            }
+        }, null);
+    }
+    function CargarCombos() {
+        var Lista = new Array();
+        var ObjParametro = new ParametrosSistema();
+        if (window.localStorage.getItem("ParametrosSystema") != null)
+            Lista = JSON.parse(window.localStorage.getItem("ParametrosSystema"));
+        var ListaUnidad = Lista.filter(x=>x.Grupo == ObjParametro.UNIDADMEDIDA_CATALOGO3);
+        var ListaAfecto = Lista.filter(x=>x.Grupo == ObjParametro.TIPOAFECTACIONIGV_CATALOGO7);
+        var ListaMoneda = Lista.filter(x=>x.Grupo == ObjParametro.TIPOMONEDA_CATALOGO2);
+        var ListaBienServicio = Lista.filter(x=>x.Grupo == ObjParametro.TIPOPRODUCTO_CATALOGO100);
+        ListaUnidad.sort(function (a, b) {
+            return a.Descripcion.toLowerCase().localeCompare(b.Descripcion.toLowerCase());
+        });
+        ListaAfecto.sort(function (a, b) {
+            return a.Descripcion.toLowerCase().localeCompare(b.Descripcion.toLowerCase());
+        });
+        ListaMoneda.sort(function (a, b) {
+            return a.Descripcion.toLowerCase().localeCompare(b.Descripcion.toLowerCase());
+        });
+        ListaBienServicio.sort(function (a, b) {
+            return a.Descripcion.toLowerCase().localeCompare(b.Descripcion.toLowerCase());
+        });
+        var ddlb = "";
+        for (var i = 0; i < ListaUnidad.length; i++) {
+            if (i == 0) {
+                ddlb += "<option value='" + VALORCOMBO + "'>";
+                ddlb += TEXTOCOMBO;
+                ddlb += "</option>";
+            }
+            ddlb += "<option value='" + ListaUnidad[i].CodigoParametro + "'>";
+            ddlb += ListaUnidad[i].Descripcion;
+            ddlb += "</option>";
+        }
+        document.getElementById("ddlb_unidad").innerHTML = ddlb;
+
+        ddlb = "";
+        for (var i = 0; i < ListaAfecto.length; i++) {
+            if (i == 0) {
+                ddlb += "<option value='" + VALORCOMBO + "'>";
+                ddlb += TEXTOCOMBO;
+                ddlb += "</option>";
+            }
+            ddlb += "<option value='" + ListaAfecto[i].CodigoParametro.trim() + "'>";
+            ddlb += ListaAfecto[i].Descripcion;
+            ddlb += "</option>";
+        }
+        document.getElementById("ddlb_afecto").innerHTML = ddlb;
+        document.getElementById("ddlb_afecto").options.selectedIndex = 1;
+
+        ddlb = "";
+        for (var i = 0; i < ListaMoneda.length; i++) {
+            if (i == 0) {
+                ddlb += "<option value='" + VALORCOMBO + "'>";
+                ddlb += TEXTOCOMBO;
+                ddlb += "</option>";
+            }
+            ddlb += "<option value='" + ListaMoneda[i].IdParametro + "'>";
+            ddlb += ListaMoneda[i].Descripcion;
+            ddlb += "</option>";
+        }
+        document.getElementById("ddlb_moneda").innerHTML = ddlb;
+        document.getElementById("ddlb_moneda").value = 136;
+        if (ListaBienServicio.length > 0) {
+            if (ListaBienServicio[0].Descripcion.toLowerCase() == "bien") {
+                document.getElementById("rbt_bien").setAttribute("value", ListaBienServicio[0].IdParametro);
+                document.getElementById("rbt_bien").checked = true;
+                document.getElementById("rbt_bien").innerText = ListaBienServicio[0].Descripcion;
+            }
+            if (ListaBienServicio[1].Descripcion.toLowerCase() == "servicio") {
+                document.getElementById("rbt_servicio").setAttribute("value", ListaBienServicio[1].IdParametro);
+                document.getElementById("rbt_servicio").innerText = ListaBienServicio[1].Descripcion;
+            }
+
+        }
+    }
+    function ListarCategoria() {
+        var urlAction = PAGE_URL + '/ListarCategoria';
+        ajax(urlAction, "get", "text", function (response) {
+            if (response != "") {
+                var Fila = response.split("#");
+                var columna = new Array();
+                var ddlb = "";
+                for (var i = 1; i < Fila.length; i++) {
+                    columna = Fila[i].split("|");
+                    if (i == 1) {
+                        ddlb += "<option value='" + VALORCOMBO + "'>";
+                        ddlb += TEXTOCOMBO;
+                        ddlb += "</option>";
+                    }
+                    ddlb += "<option value='" + columna[0] + "'>";
+                    ddlb += columna[1];
+                    ddlb += "</option>";
+                }
+                document.getElementById("ddlb_categoria").innerHTML = ddlb;
+            }
+        }, null);
+    }
+    function InsertarProducto() {
+        var flagerror = $("#frm_insert").valid();
+        //var ddlb_unidad = document.getElementById("ddlb_unidad");
+        //ddlb_unidad.classList.remove("error")
+        //if (ddlb_unidad.value == "0") {
+        //    ddlb_unidad.className += " error";
+        //    var span = document.createElement("span");
+        //    span.innerText = "ingrese aaa";
+        //    var parent = ddlb_unidad.parentNode;
+        //    parent.insertAfter(span, ddlb_unidad);
+        //}
+        if (flagerror == false) {
+            toastr["warning"]("Ingrese los datos requeridos del formulario");
+            return;
+        }
+        var Producto = {
+            IdProducto: parseInt(document.getElementById("hdn_idproducto").value),
+            CodigoSunat: "",
+            CodigoBarras: "",
+            IdUnidad: document.getElementById("ddlb_unidad").value,
+            IdAfectacion: document.getElementById("ddlb_afecto").value,
+            IdCategoria: parseInt(document.getElementById("ddlb_categoria").value),
+            IdTipo: document.getElementsByName("g_bienservicio")[0].checked ? document.getElementsByName("g_bienservicio")[0].value : document.getElementsByName("g_bienservicio")[1].value,
+            IdMoneda: parseInt(document.getElementById("ddlb_moneda").value),
+            Nombre: document.getElementById("txt_nombre").value,
+            Stock: parseInt(document.getElementById("txt_stock").value),
+            PrecioCompra: 0,
+            PrecioVenta: parseFloat(document.getElementById("txt_precio").value)
+        };
+        waitingDialog.show();
+        var urlAction = PAGE_URL + '/InsertarProducto';
+        var param = JSON.stringify({ p: Producto });
+        ajax(urlAction, "post", "json", function (response) {
+            if (response != "") {
+                if (response.d == 1) {
+                    $("#dialog_nuevo").modal("hide");
+                    //bootbox.alert({
+                    //    size: "small",
+                    //    message: "El Producto se Guardó con Éxito",
+                    //    callback: function () {
+                    //        $("#dialog_nuevo").modal("hide");
+                    //    }
+                    //});
+                }
+                $("#dialog_nuevo").modal("hide");
+                PaginarProducto();
+                waitingDialog.hide();
+            }
+        }, param);
+    }
+    function ResetFomulario(IdForm) {
+        var form = document.getElementById(IdForm).elements;
+        var NroElementos = form.length;
+        var IdElemento = null, clase = null;
+        for (var i = 0; i < NroElementos; i++) {
+            clase = form[i].classList;
+            if (typeof (form[i].id) !== undefined && form[i].id !== "") {
+                IdElemento = form[i].id;
+
+                if (form[i].type === "text" || form[i].type === "textarea") form[i].value = "";
+                if (form[i].type === "select-one") form[i].value = "0";
+                if (form[i].type == "hidden") form[i].value = "0";
+                if (form[i].type === "text" || form[i].type === "select-one" || form[i].type === "textarea" || form[i].type === "select-multiple"
+                    || form[i].type === "file") {
+                    $("#" + IdElemento).next("span.help-block").remove();
+                }
+                else if (form[i].type === "radio") $("#" + IdElemento).parent().next("span.error").remove();
+
+            }
+            if (clase.length !== 0) {
+                form[i].classList.remove("error");
+            }
+        }
+    }
+    function ValidacionFormulario() {
+        jQuery.validator.addMethod("option0", function (value, element, params) {
+            if (value == "0") return false;
+            else return true;
+        }, jQuery.validator.format("Please enter the correct value for {0}"));
+        jQuery.validator.addMethod("descripcion", function (value, element, params) {
+            if (/^[0-9a-zA-ZáéíóúÁÉÍÓÚ\.-\s*]+$/.test(value) == false) return false;
+            else return true;
+        }, jQuery.validator.format("Please enter the correct value for {0}"));
+        $("#frm_insert").validate({
+            ignore: ".ignore",
+            errorClass: "error",
+            validClass: "my-valid-class",
+            rules: {
+                ddlb_unidad: {
+                    option0: true
+                },
+                ddlb_afecto: {
+                    option0: true
+                },
+                ddlb_categoria: {
+                    option0: true
+                },
+                g_bienservicio: {
+                    required: true
+                },
+                ddlb_moneda: {
+                    option0: true
+                },
+                txt_nombre: {
+                    required: true,
+                    descripcion: true,
+                    minlength: 3
+                },
+                txt_stock: {
+                    required: true,
+                    digits: true
+                },
+                txt_precio: {
+                    required: true,
+                    number: true
+                }
+            },
+            messages: {
+                ddlb_unidad: {
+                    option0: "Seleccione Unidad"
+                },
+                ddlb_afecto: {
+                    option0: "Seleccione Afecto"
+                },
+                ddlb_categoria: {
+                    option0: "Seleccione Categoria"
+                },
+                g_bienservicio: {
+                    required: "Marque un Tipo de Bien"
+                },
+                ddlb_moneda: {
+                    option0: "Seleccione Moneda"
+                }, txt_nombre: {
+                    required: "Ingrese Nombre del Producto",
+                    descripcion: "Caractér inválido",
+                    minlength: $.validator.format("Debes ingresar por lo menos {0} caracteres.")
+                },
+                txt_stock: {
+                    required: "Ingrese Stock",
+                    digits: "Ingrese un valor válido"
+                },
+                txt_precio: {
+                    required: "Ingrese Precio",
+                    number: "Ingrese Precio Válido ejem:45.00"
+                }
+            },
+            errorPlacement: function (label, element) {
+                label.addClass('help-block');
+                label.insertAfter(element);
+            },
+            wrapper: 'span'
+        });
+    }
+    function PaginarProducto() {
+        var urlAction = PAGE_URL + '/PaginarProducto';
+        var Filtro = document.getElementById("txt_filtro").value;
+        var PageNumber = 1;
+        var tabla = document.getElementById("tblproducto");
+        var tablahtml = "";
+
+        var Param = null;// JSON.stringify({ Filtro: Filtro, PageSize: _RegistroPorPagina, PageNumber: PageNumber });
+        ajax(urlAction, "get", "text", function (response) {
+            if (response != "") {
+                var fila = 0;
+                var filaDatos = response.split("#");
+                var nroFilas = response.length;
+                var columna = null;
+                var nroColumnas = 0;
+                for (var i = 0; i < nroFilas; i++) {
+                    if (filaDatos[i] == null || typeof (filaDatos[i]) == undefined) continue;
+                    columna = filaDatos[i].split("|");
+                    nroColumnas = columna.length;
+                    _matriz[fila] = [];
+                    for (var j = 0; j < nroColumnas; j++) {
+                        _matriz[fila][j] = columna[j];
+                    }
+                    fila++;
+                }
+                FiltrarMatriz();
+            }
+        }, Param);
+    }
+    function FiltrarMatriz() {
+        var txt_filtro = document.getElementById("txt_filtro").value;
+        var nrofilas = _matriz.length;
+        var nrocolumnas = _matriz[0].length;
+        var tbl = "";
+
+        for (var i = 1; i < nrofilas; i++) {
+
+            tbl += "<tr>";
+            for (var j = 0; j < nrocolumnas; j++) {
+                if (j == 0 || j == 2 || j == 7 || j >= 10) continue;
+                if (txt_filtro == "" || _matriz[i][3].toLowerCase().indexOf(txt_filtro.toLowerCase())>-1) {
+                    tbl += "<td>";
+                    if (j == 9) {
+                        tbl += "<a title='Editar' href='javascript:void(0)' onclick='Editar(this," + (_matriz[i][0]) * 1 + ")' ><span class='icon icon-pencil-square-o icon-custom'></span></a>";
+                        tbl += "<a title='Eliminar' href='javascript:Eliminar(" + (_matriz[i][0]) * 1 + ")' ><span class='icon icon-trash icon-custom'></span></a>";
+                    } else tbl += _matriz[i][j];
+                    tbl += "</td>";
+                }
+               
+            }
+            tbl += "</tr>";
+
+        }
+        document.getElementById("tblproducto").getElementsByTagName("tbody")[0].innerHTML = tbl;
+    }
+    function Editar(elemento, IdProducto) {
+        if (_matriz.length == 0) return;
+        var nrofilas = _matriz.length;
+        var nrocolumnas = _matriz[0].length;
+        var posfila = -1;
+        for (var i = 1; i < nrofilas; i++) {
+            if (_matriz[i][0] * 1 == IdProducto) {
+                posfila = i;
+                break;
+            }
+        }
+
+        elemento.parentNode.parentNode.classList.add("selected-row");
+        if (posfila > 0) {
+            document.getElementById("hdn_idproducto").value = _matriz[posfila][0];
+            document.getElementById("ddlb_categoria").value = _matriz[posfila][15];
+            document.getElementById("ddlb_afecto").value = _matriz[posfila][14];
+            document.getElementById("ddlb_moneda").value = _matriz[posfila][17];
+            document.getElementById("ddlb_unidad").value = _matriz[posfila][13];
+            if (_matriz[posfila][16] == 229)
+                document.getElementsByName("g_bienservicio")[0].checked = true;
+            else document.getElementsByName("g_bienservicio")[1].checked = true;
+            document.getElementById("txt_nombre").value = _matriz[posfila][3];
+            document.getElementById("txt_stock").value = _matriz[posfila][8];
+            document.getElementById("txt_precio").value = _matriz[posfila][6];
+            $("#dialog_nuevo").modal("show");
+            $("#dialog_nuevo").appendTo("body");
+        }
+    }
+    function Eliminar(IdProducto) {
+        bootbox.confirm("¿Va Eliminar el Producto?", function (resultado) {
+            if (resultado === false) return;
+            PaginarProducto();
+        });
+    }
+
+</script>

@@ -1,0 +1,6 @@
+D:\EmisionFacturas\Facturacion.ServicioWindows\bin\Debug\Facturacion.ServicioWindows.exe.config
+D:\EmisionFacturas\Facturacion.ServicioWindows\bin\Debug\Facturacion.ServicioWindows.exe
+D:\EmisionFacturas\Facturacion.ServicioWindows\bin\Debug\Facturacion.ServicioWindows.pdb
+D:\EmisionFacturas\Facturacion.ServicioWindows\obj\Debug\Facturacion.ServicioWindows.csprojResolveAssemblyReference.cache
+D:\EmisionFacturas\Facturacion.ServicioWindows\obj\Debug\Facturacion.ServicioWindows.exe
+D:\EmisionFacturas\Facturacion.ServicioWindows\obj\Debug\Facturacion.ServicioWindows.pdb

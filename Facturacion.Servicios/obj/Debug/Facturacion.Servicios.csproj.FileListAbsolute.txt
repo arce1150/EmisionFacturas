@@ -1,0 +1,9 @@
+D:\EmisionFacturas\Facturacion.Servicios\bin\Debug\Facturacion.Servicios.dll
+D:\EmisionFacturas\Facturacion.Servicios\bin\Debug\Facturacion.Servicios.pdb
+D:\EmisionFacturas\Facturacion.Servicios\bin\Debug\Facturacion.Entidades.dll
+D:\EmisionFacturas\Facturacion.Servicios\bin\Debug\Facturacion.Entidades.pdb
+D:\EmisionFacturas\Facturacion.Servicios\obj\Debug\Facturacion.Servicios.csprojResolveAssemblyReference.cache
+D:\EmisionFacturas\Facturacion.Servicios\obj\Debug\Facturacion.Servicios.dll
+D:\EmisionFacturas\Facturacion.Servicios\obj\Debug\Facturacion.Servicios.pdb
+D:\EmisionFacturas\Facturacion.Servicios\bin\Debug\Facturacion.Utilitarios.dll
+D:\EmisionFacturas\Facturacion.Servicios\bin\Debug\Facturacion.Utilitarios.pdb

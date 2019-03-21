@@ -1,0 +1,5 @@
+D:\EmisionFacturas\Facturacion.Entidades\bin\Debug\Facturacion.Entidades.dll
+D:\EmisionFacturas\Facturacion.Entidades\bin\Debug\Facturacion.Entidades.pdb
+D:\EmisionFacturas\Facturacion.Entidades\obj\Debug\Facturacion.Entidades.dll
+D:\EmisionFacturas\Facturacion.Entidades\obj\Debug\Facturacion.Entidades.pdb
+D:\EmisionFacturas\Facturacion.Entidades\obj\Debug\Facturacion.Entidades.csprojResolveAssemblyReference.cache

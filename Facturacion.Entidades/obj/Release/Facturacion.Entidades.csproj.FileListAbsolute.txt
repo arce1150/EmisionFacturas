@@ -1,0 +1,4 @@
+D:\EmisionFacturas\Facturacion.Entidades\bin\Release\Facturacion.Entidades.dll
+D:\EmisionFacturas\Facturacion.Entidades\bin\Release\Facturacion.Entidades.pdb
+D:\EmisionFacturas\Facturacion.Entidades\obj\Release\Facturacion.Entidades.dll
+D:\EmisionFacturas\Facturacion.Entidades\obj\Release\Facturacion.Entidades.pdb

@@ -1,0 +1,17 @@
+a.btn_float {
+    width: 62px;
+    height: 60px;
+    border-radius: 50%;
+    position: fixed;
+    right: 1px;
+    padding: 4px 16.5px;
+    font-size: 35px;
+    color: #fff;
+    background-color: #27ae60;
+    z-index: 9999;
+    top: 53px; 
+}
+
+    a.btn_float:hover {
+        background-color: rgba(39, 174, 96, 0.81);
+    }

@@ -1,0 +1,67 @@
+﻿<!-- Dialog -->
+<input type="hidden" id="hdn_idproducto" name="hdn_idproducto" value="0" />
+<div id="dialog_nuevo" tabindex="-1" role="dialog" class="modal in" data-backdrop="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInLeft">
+            <div class="modal-header bg-success">
+                <h4 class="modal-title" id="dialog_titulo">Producto</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">Close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="frm_insert" name="frm_insert"> 
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Unidad</label>
+                                <select id="ddlb_unidad" name="ddlb_unidad" class="form-control"></select>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Categoria</label>
+                                <select id="ddlb_categoria" name="ddlb_categoria" class="form-control"></select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Afecto</label>
+                                <select id="ddlb_afecto" name="ddlb_afecto" class="form-control"></select>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Moneda</label>
+                                <select id="ddlb_moneda" name="ddlb_moneda" class="form-control"></select>
+                            </div>
+                        </div>
+                    </div> 
+                    <div class="form-group">
+                        <label for="rbt_bien" class="control-label">
+                            <input type="radio" id="rbt_bien" name="g_bienservicio" class="required" />
+                            Bien
+                        </label>
+                        <label for="rbt_bien" class="control-label">
+                            <input type="radio" id="rbt_servicio" name="g_bienservicio" />
+                            Servicio
+                        </label>
+                    </div> 
+                    <div class="form-group">
+                        <label class="control-label">Producto</label>
+                        <input type="text" id="txt_nombre" name="txt_nombre" class="form-control" maxlength="200" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Stock</label>
+                        <input type="text" id="txt_stock" name="txt_stock" class="form-control" maxlength="10" onkeypress="return IsNumber(event);" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Precio</label>
+                        <input type="text" id="txt_precio" name="txt_precio" class="form-control" maxlength="10" onkeypress="return ValidarDecimal(event,this);" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="btn_insertar" name="btn_insertar" class="btn btn-success" type="button"><i class="icon icon-save"></i> Guardar</button>
+                <button class="btn btn-default" data-dismiss="modal" type="button">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

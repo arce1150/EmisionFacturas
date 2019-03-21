@@ -1,0 +1,177 @@
+﻿@using Facturacion.Entidades
+@{ 
+    var usuario =(UsuarioBe)Session["LoginUsuario"];
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" /> 
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <title>www.raysa.pe</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="@Url.Content("~/Content/img/favicon-32x32.png")" sizes="32x32">
+    <link rel="icon" type="image/png" href="@Url.Content("~/Content/img/favicon-16x16.png")" sizes="16x16">
+    <link rel="mask-icon" href="safari-pinned-tab.svg" color="#27ae60">
+    <link type="text/css" rel="stylesheet" href="@Url.Content("~/Content/css/vendor.min.css")">
+    <link type="text/css" rel="stylesheet" href="@Url.Content("~/Content/css/elephant.min.css")">
+    <link type="text/css" rel="stylesheet" href="@Url.Content("~/Content/css/application.min.css")">
+    <link type="text/css" rel="stylesheet" href="@Url.Content("~/Content/StyleSheet.css")"  />
+    <script type="text/javascript" src="@Url.Content("~/Scripts/vendor.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/elephant.min.js")"></script> 
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.validate.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/bootbox.min.js")"></script>
+</head>
+<body class="layout layout-header-fixed">
+    <div id="divheader" class="layout-header">
+        <div class="navbar navbar-default">
+            <div class="navbar-header">
+                <a class="navbar-brand navbar-brand-center" href="javascript:void(0)">
+                    RAYSA 
+                </a>
+                <button class="navbar-toggler visible-xs-block collapsed" type="button" data-toggle="collapse" data-target="#sidenav">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="bars">
+                        <span class="bar-line bar-line-1 out"></span>
+                        <span class="bar-line bar-line-2 out"></span>
+                        <span class="bar-line bar-line-3 out"></span>
+                    </span>
+                    <span class="bars bars-x">
+                        <span class="bar-line bar-line-4"></span>
+                        <span class="bar-line bar-line-5"></span>
+                    </span>
+                </button>
+                <button class="navbar-toggler visible-xs-block collapsed" type="button" data-toggle="collapse" data-target="#navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="arrow-up"></span>
+                    <span class="ellipsis ellipsis-vertical">
+                        <img class="ellipsis-object" width="32" height="32" src="~/Content/img/0180441436.jpg" alt="Teddy Wilson">
+                    </span>
+                </button>
+            </div>
+            <div class="navbar-toggleable">
+                <nav id="navbar" class="navbar-collapse collapse">
+                    <button class="sidenav-toggler hidden-xs" title="Collapse sidenav ( [ )" aria-expanded="true" type="button">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="bars">
+                            <span class="bar-line bar-line-1 out"></span>
+                            <span class="bar-line bar-line-2 out"></span>
+                            <span class="bar-line bar-line-3 out"></span>
+                            <span class="bar-line bar-line-4 in"></span>
+                            <span class="bar-line bar-line-5 in"></span>
+                            <span class="bar-line bar-line-6 in"></span>
+                        </span>
+                    </button>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="visible-xs-block">
+                            <h4 class="navbar-text text-center">Bien Venida: @usuario.Nombres</h4>
+                        </li>
+                        <li class="dropdown hidden-xs">
+                            <button class="navbar-account-btn" data-toggle="dropdown" aria-haspopup="true">
+                                <img class="rounded" width="36" height="36" src="~/Content/img/0180441436.jpg" alt="Teddy Wilson"> @usuario.Loguin
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right"> 
+                                <li class="divider"></li>
+                                <li><a href="javascript:void(0)">Contactar</a></li>
+                                <li><a href="javascript:void(0)">Profile</a></li>
+                                <li><a href="@Url.Action("Salir","Login")">Cerrar Sessión</a></li>
+                            </ul>
+                        </li>
+                        <li class="visible-xs-block">
+                            <a href="javascript:void(0)">
+                                <span class="icon icon-users icon-lg icon-fw"></span>
+                                Contactar
+                            </a>
+                        </li>
+                        <li class="visible-xs-block">
+                            <a href="javascript:void(0)">
+                                <span class="icon icon-power-off icon-lg icon-fw"></span>
+                                Cerrar
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <div class="layout-main">
+        <div id="menuizquierda" class="layout-sidebar">
+            <div class="layout-sidebar-backdrop"></div>
+            <div class="layout-sidebar-body">
+                <div class="custom-scrollbar">
+                    <nav id="sidenav" class="sidenav-collapse collapse">
+                        <ul class="sidenav">
+                           
+                            <li class="sidenav-heading">Menú</li>
+                            <li class="sidenav-item has-subnav">
+                                <a href="javascript:vpid(0)" aria-haspopup="true">
+                                    <span class="sidenav-icon icon icon-home"></span>
+                                    <span class="sidenav-label">Maestros</span>
+                                </a>
+                                <ul class="sidenav-subnav collapse">
+                                    <li class="sidenav-subheading">Maestros</li>
+                                    <li><a href="@Url.Content("~/Producto/Index")">Productos</a></li>
+                                    <li><a href="#">Cliente</a></li>
+                                </ul>
+                            </li>  
+                            <li class="sidenav-item has-subnav active">
+                                <a href="#" aria-haspopup="true">
+                                    <span class="sidenav-icon icon icon-briefcase"></span>
+                                    <span class="sidenav-label">Comprobantes</span>
+                                </a>
+                                <ul class="sidenav-subnav collapse">
+                                    <li class="sidenav-subheading">Comprobantes</li>
+                                    <li><a href="arrows.html">Factura</a></li>
+                                    <li><a href="arrows.html">Boleta</a></li>
+                                    <li><a href="arrows.html">Nota Débito</a></li>
+                                    <li><a href="arrows.html">Nota Crédito</a></li>
+                                </ul>
+                            </li>
+                            <li class="sidenav-item has-subnav">
+                                <a href="#" aria-haspopup="true">
+                                    <span class="sidenav-icon icon icon-edit"></span>
+                                    <span class="sidenav-label">Formmularios</span>
+                                </a>
+                                <ul class="sidenav-subnav collapse">
+                                    <li class="sidenav-subheading">Forms</li>
+                                    <li><a href="cropper.html">Cropper</a></li>
+                                </ul>
+                            </li>
+
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div id="divbody" class="layout-content">
+            <div class="layout-content-body">
+                <div class="title-bar">
+                    <h1 class="title-bar-title">
+                        <span id="spantituloventana" class="d-ib">Modals</span> 
+                    </h1> 
+                </div>
+                <div class="row gutter-xs">
+                    <div class="col-xs-12"> 
+                        @RenderBody()
+                    </div>
+                </div>
+                
+            </div>
+            <div id="divfooter" class="layout-footer">
+                <div class="layout-footer-body">
+                    <small class="version">Version 1.0.0</small>
+                    <small class="copyright">2019 &copy; Reader</small>
+                </div>
+            </div>
+            <a id="lnkAgregar" href="javascript:void(0)" title="Registro" class="btn_float"><span class="icon icon-plus-square"></span></a>
+             
+        </div>
+         
+    </div>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/application.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/demo.min.js")"></script> 
+    
+</body>
+</html>
