@@ -81,7 +81,11 @@
             if (document.getElementById("hdn_idproducto").value == "0") document.getElementById("dialog_titulo").innerHTML = "Producto";
             else document.getElementById("dialog_titulo").innerHTML = "Editar Producto";
 
-            $("#dialog_nuevo").modal("show");
+            $("#dialog_nuevo").modal({
+                backdrop: 'static',
+                keyboard: false,
+                show:true
+            });
             $("#dialog_nuevo").appendTo("body");
         }, false);
         document.getElementById("btn_insertar").addEventListener("click", function (e) {
@@ -91,7 +95,10 @@
         document.getElementById("btn_filtrar").addEventListener("click", function () {
             //PaginarProducto();
 			FiltrarMatriz();
-        }, false); 
+        }, false);
+        document.getElementById("txt_filtro").addEventListener("keyup", function () {
+            FiltrarMatriz();
+        },false);
         PaginarProducto();
 
     };
@@ -200,16 +207,7 @@
         }, null);
     }
     function InsertarProducto() {
-        var flagerror = $("#frm_insert").valid();
-        //var ddlb_unidad = document.getElementById("ddlb_unidad");
-        //ddlb_unidad.classList.remove("error")
-        //if (ddlb_unidad.value == "0") {
-        //    ddlb_unidad.className += " error";
-        //    var span = document.createElement("span");
-        //    span.innerText = "ingrese aaa";
-        //    var parent = ddlb_unidad.parentNode;
-        //    parent.insertAfter(span, ddlb_unidad);
-        //}
+        var flagerror = $("#frm_insert").valid(); 
         if (flagerror == false) {
             toastr["warning"]("Ingrese los datos requeridos del formulario");
             return;
@@ -231,23 +229,22 @@
         waitingDialog.show();
         var urlAction = PAGE_URL + '/InsertarProducto';
         var param = JSON.stringify({ p: Producto });
-        ajax(urlAction, "post", "json", function (response) {
-            if (response != "") {
-                if (response.d == 1) {
+        try{
+            ajax(urlAction, "post", "json", function (response) {
+                if (response != "") {
+                    if (response.d == 1) {
+                        $("#dialog_nuevo").modal("hide");
+                    }
                     $("#dialog_nuevo").modal("hide");
-                    //bootbox.alert({
-                    //    size: "small",
-                    //    message: "El Producto se Guardó con Éxito",
-                    //    callback: function () {
-                    //        $("#dialog_nuevo").modal("hide");
-                    //    }
-                    //});
+                    PaginarProducto();
+                    waitingDialog.hide();
                 }
-                $("#dialog_nuevo").modal("hide");
-                PaginarProducto();
-                waitingDialog.hide();
-            }
-        }, param);
+            }, param);
+        } catch (ex) {
+            toastr["warning"]("Ha ocurrido un error en el sistema");
+            waitingDialog.hide();
+        }
+        
     }
     function ResetFomulario(IdForm) {
         var form = document.getElementById(IdForm).elements;
@@ -386,17 +383,19 @@
         var nrofilas = _matriz.length;
         var nrocolumnas = _matriz[0].length;
         var tbl = "";
-
+        if (_matriz == null || _matriz.length == 0) return;
         for (var i = 1; i < nrofilas; i++) {
 
             tbl += "<tr>";
             for (var j = 0; j < nrocolumnas; j++) {
                 if (j == 0 || j == 2 || j == 7 || j >= 10) continue;
-                if (txt_filtro == "" || _matriz[i][3].toLowerCase().indexOf(txt_filtro.toLowerCase())>-1) {
+                if (txt_filtro == "" || _matriz[i][1].toLowerCase().indexOf(txt_filtro.toLowerCase())>-1
+                    || _matriz[i][3].toLowerCase().indexOf(txt_filtro.toLowerCase()) > -1
+                   ) {
                     tbl += "<td>";
                     if (j == 9) {
-                        tbl += "<a title='Editar' href='javascript:void(0)' onclick='Editar(this," + (_matriz[i][0]) * 1 + ")' ><span class='icon icon-pencil-square-o icon-custom'></span></a>";
-                        tbl += "<a title='Eliminar' href='javascript:Eliminar(" + (_matriz[i][0]) * 1 + ")' ><span class='icon icon-trash icon-custom'></span></a>";
+                        tbl += "<a title='Editar' href='javascript:void(0)'  onclick='Editar(this," + (_matriz[i][0]) * 1 + ")' ><span class='icon icon-pencil-square-o icon-custom'></span></a>";
+                        tbl += "<a title='Eliminar' href='javascript:void(0)' href='javascript:Eliminar(" + (_matriz[i][0]) * 1 + ")' ><span class='icon icon-trash icon-custom'></span></a>";
                     } else tbl += _matriz[i][j];
                     tbl += "</td>";
                 }
@@ -432,7 +431,11 @@
             document.getElementById("txt_nombre").value = _matriz[posfila][3];
             document.getElementById("txt_stock").value = _matriz[posfila][8];
             document.getElementById("txt_precio").value = _matriz[posfila][6];
-            $("#dialog_nuevo").modal("show");
+            $("#dialog_nuevo").modal({
+                backdrop: 'static',
+                keyboard: false,
+                show: true
+            });
             $("#dialog_nuevo").appendTo("body");
         }
     }
