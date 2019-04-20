@@ -10,5 +10,6 @@ namespace Facturacion.Servicios.Interfaces
         public abstract List<ProductoBe> PaginarProducto(string Filtro,int PageSize,int PageNumber, out int TotalRegistros);
         public abstract string PaginarProductoV2();
         public abstract string ListarCategorias();
+        public abstract int EliminarProducto(int IdProducto,int UsuarioElimina);
     }
 }

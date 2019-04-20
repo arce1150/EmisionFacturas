@@ -220,11 +220,7 @@ namespace Facturacion.Servicios.Business
                     cmd.CommandType = CommandType.StoredProcedure;
                     //cmd.Parameters.Add(new SqlParameter() { ParameterName = "@IdProducto", SqlDbType = SqlDbType.Int, Value = (object)IdProducto ?? DBNull.Value, Direction = ParameterDirection.Input, IsNullable = false });
                     object data = cmd.ExecuteScalar();
-                    if (data != null) resultado = data.ToString();
-                    //var Fila = resultado.Split('#')[1];
-                    //var Columna = Fila.Split('|');
-                    //var UltimaColumna =int.Parse(Columna[Columna.Length -1]);
-                    //TotalRegistros =string.IsNullOrEmpty(resultado)? 0: UltimaColumna;
+                    if (data != null) resultado = data.ToString(); 
                     return resultado;
                 }
                 catch (SqlException ex)
@@ -237,6 +233,34 @@ namespace Facturacion.Servicios.Business
                     Log.GrabarLog(ex1.Message, ex1.StackTrace);
                     throw ex1;
                 } 
+            }
+        }
+
+        public override int EliminarProducto(int IdProducto, int UsuarioElimina)
+        {
+            int FilasAfectadas = 0;
+            using (SqlConnection conexion = new SqlConnection(_conexion))
+            {
+                try
+                {
+                    conexion.Open();
+                    SqlCommand cmd = new SqlCommand("USP_PRODUCTO_ELIMINACION", conexion);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter() { ParameterName = "@IdProducto", SqlDbType = SqlDbType.Int, Value = (object)IdProducto ?? DBNull.Value, Direction = ParameterDirection.Input, IsNullable = false });
+                    cmd.Parameters.Add(new SqlParameter() { ParameterName = "@UsuarioElimina", SqlDbType = SqlDbType.Int, Value = (object)UsuarioElimina ?? DBNull.Value, Direction = ParameterDirection.Input, IsNullable = false });
+                    FilasAfectadas =cmd.ExecuteNonQuery();
+                    return FilasAfectadas;
+                }
+                catch (SqlException ex)
+                {
+                    Log.GrabarLog(ex.Message, ex.StackTrace);
+                    throw ex;
+                }
+                catch (Exception ex1)
+                {
+                    Log.GrabarLog(ex1.Message, ex1.StackTrace);
+                    throw ex1;
+                }
             }
         }
     }

@@ -47,11 +47,25 @@
                         </tr>
                     </thead>
                     <tbody></tbody>
+                    <tfoot>
+                        <tr>
+                            <td>
+                                <span id="stotalregistros"></span>
+                            </td>
+                            <td colspan="6">
+                                <ul id="ulpaginacion" class="pagination pull-right">
+                                    
+                                </ul>
+                            </td>
+                        </tr>
+                        
+                    </tfoot>
                 </table>
-            </div>
-        </div>
+                
+            </div> 
+        </div> 
     </div>
-</div>
+</div> 
 @{
     Html.RenderPartial("_Registro");
 }
@@ -64,8 +78,8 @@
     var TEXTOCOMBO = "Seleccione";
     var TITULOVENTANA = "@ViewBag.Title";
     var _matriz = [];
-    var _RegistroPorPagina = 100;
-    var _Indice = 0;
+    var _RegistroPorPagina = 10;
+    var _Pagina = 0;
     window.onload = function () {
         document.getElementById("spantituloventana").innerHTML = TITULOVENTANA;
         if (window.localStorage.getItem("ParametrosSystema") === null) {
@@ -370,7 +384,8 @@
                     nroColumnas = columna.length;
                     _matriz[fila] = [];
                     for (var j = 0; j < nroColumnas; j++) {
-                        _matriz[fila][j] = columna[j];
+                        if (isNaN(columna[j])) _matriz[fila][j] = columna[j];
+                        else _matriz[fila][j] = columna[j]*1;
                     }
                     fila++;
                 }
@@ -383,28 +398,50 @@
         var nrofilas = _matriz.length;
         var nrocolumnas = _matriz[0].length;
         var tbl = "";
-        if (_matriz == null || _matriz.length == 0) return;
-        for (var i = 1; i < nrofilas; i++) {
-
-            tbl += "<tr>";
-            for (var j = 0; j < nrocolumnas; j++) {
-                if (j == 0 || j == 2 || j == 7 || j >= 10) continue;
-                if (txt_filtro == "" || _matriz[i][1].toLowerCase().indexOf(txt_filtro.toLowerCase())>-1
-                    || _matriz[i][3].toLowerCase().indexOf(txt_filtro.toLowerCase()) > -1
-                   ) {
-                    tbl += "<td>";
-                    if (j == 9) {
-                        tbl += "<a title='Editar' href='javascript:void(0)'  onclick='Editar(this," + (_matriz[i][0]) * 1 + ")' ><span class='icon icon-pencil-square-o icon-custom'></span></a>";
-                        tbl += "<a title='Eliminar' href='javascript:void(0)' href='javascript:Eliminar(" + (_matriz[i][0]) * 1 + ")' ><span class='icon icon-trash icon-custom'></span></a>";
-                    } else tbl += _matriz[i][j];
-                    tbl += "</td>";
+        if (_matriz == null || _matriz.length == 0) return; 
+        var inicio = (_RegistroPorPagina * _Pagina) + 1;
+        var fin = inicio + _RegistroPorPagina;
+        for (var i = inicio; i < fin; i++) {
+            if (i < nrofilas) {
+                tbl += "<tr>";
+                for (var j = 0; j < nrocolumnas; j++) {
+                    if (j == 0 || j == 2 || j == 7 || j >= 10) continue;
+                    if (txt_filtro == "" || _matriz[i][1].toLowerCase().indexOf(txt_filtro.toLowerCase()) > -1
+                        || _matriz[i][3].toLowerCase().indexOf(txt_filtro.toLowerCase()) > -1
+                       ) {
+                        tbl += "<td>";
+                        if (j == 9) {
+                            tbl += "<a title='Editar' href='javascript:void(0)'  onclick='Editar(this," + (_matriz[i][0]) * 1 + ")' ><span class='icon icon-pencil-square-o icon-custom'></span></a>";
+                            tbl += "<a title='Eliminar' href='javascript:void(0)' onclick='javascript:Eliminar(" + (_matriz[i][0]) * 1 + ")' ><span class='icon icon-trash icon-custom'></span></a>";
+                        } else tbl += _matriz[i][j];
+                        tbl += "</td>";
+                    }
                 }
-               
-            }
-            tbl += "</tr>";
-
+                tbl += "</tr>";
+            } else break;
         }
         document.getElementById("tblproducto").getElementsByTagName("tbody")[0].innerHTML = tbl;
+        document.getElementById("stotalregistros").innerHTML = nrofilas;
+        ImprimirPaginas();
+    }
+    function ImprimirPaginas() {
+        if (_matriz == null || _matriz.length == 0) return;
+        var NroRegistros = _matriz.length;
+        var TotalPaginas = NroRegistros / _RegistroPorPagina;
+        if (NroRegistros % _RegistroPorPagina == 0) TotalPaginas--;
+        var paginas = "";
+        for (var i = 0; i < TotalPaginas; i++) {
+            paginas += "<li class='paginate_button'>";
+            paginas += "<a href='javascript:void(0)' onclick='Paginar(";
+            paginas += i + ")' >";
+            paginas +=(i+1);
+            paginas += "</a></li>";
+        }
+        document.getElementById("ulpaginacion").innerHTML = paginas;
+    }
+    function Paginar(pagina) {
+        _Pagina = pagina;
+        FiltrarMatriz();
     }
     function Editar(elemento, IdProducto) {
         if (_matriz.length == 0) return;
@@ -417,7 +454,7 @@
                 break;
             }
         }
-
+        RemoverClase();
         elemento.parentNode.parentNode.classList.add("selected-row");
         if (posfila > 0) {
             document.getElementById("hdn_idproducto").value = _matriz[posfila][0];
@@ -439,11 +476,26 @@
             $("#dialog_nuevo").appendTo("body");
         }
     }
-    function Eliminar(IdProducto) {
-        bootbox.confirm("¿Va Eliminar el Producto?", function (resultado) {
+    function Eliminar(IdProducto) { 
+        bootbox.confirm("¿Está Seguro que Quiere Eliminar el Producto?", function (resultado) {
             if (resultado === false) return;
-            PaginarProducto();
+            var urlAction = PAGE_URL + '/EliminarProducto';
+            var Param = JSON.stringify({ IdProducto: IdProducto });
+            ajax(urlAction, "post", "text", function (response) {
+                if (response != "") {
+
+                    PaginarProducto();
+                }
+            }, Param);
+            
         });
     }
-
+    function RemoverClase() {
+        var tbl = document.getElementById("tblproducto").getElementsByTagName("tbody")[0];
+        var tr = tbl.getElementsByClassName("selected-row");
+        var nrofilas = tr.length;
+        for (var i = 0; i < nrofilas; i++) {
+            tr[i].classList.remove("selected-row");
+        }
+    }
 </script>

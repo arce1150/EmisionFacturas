@@ -49,5 +49,12 @@ namespace Facturacion.Web.Controllers
             var Lista = ServiceManager<ProductoSvc>.Provider.PaginarProductoV2();
             return Lista;
         }
+        public int EliminarProducto(int IdProducto) {
+            int FilasAfectadas = 0;
+            UsuarioBe usuario = new UsuarioBe();
+            usuario = MetodosUtiles.ObtenerUsuario();
+            FilasAfectadas = ServiceManager<ProductoSvc>.Provider.EliminarProducto(IdProducto, usuario.IdUsuario);
+            return FilasAfectadas;
+        }
     }
 }
