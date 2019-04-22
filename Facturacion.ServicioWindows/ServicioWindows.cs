@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.ServiceProcess;
 using System.Timers;
@@ -44,6 +45,30 @@ namespace Facturacion.ServicioWindows
         {
             //var registro = new RegistroPadron();
             //registro.ProcesarPadron();
+            string RutaFichero = System.Configuration.ConfigurationManager.AppSettings["RutaFicheroPadron"];
+            string Path =string.Concat(RutaFichero, "padron_reducido_ruc.txt");
+            ReadFileInBatch(Path);
+        }
+        internal static void ReadFileInBatch(string Path)
+        {
+            string RutaFichero = System.Configuration.ConfigurationManager.AppSettings["RutaFicheroPadron"];
+            int TotalRows = File.ReadLines(Path).Count();  
+            int Limit = 10000;
+            System.Data.DataTable dt = null;
+            string Logs = string.Empty;
+            for (int Offset = 0; Offset < TotalRows; Offset += Limit)
+            {
+                // Print Logs
+                //Logs = string.Format("Processing :: Rows {0} of Total {1} :: Offset {2} : Limit : {3}",
+                //    (Offset + Limit) < TotalRows ? Offset + Limit : TotalRows,
+                //    TotalRows, Offset, Limit
+                //); 
+                //Console.WriteLine(Logs);
+                dt = Path.FileToTable(heading: true, delimiter: '|', offset: Offset, limit: Limit);
+                 
+                //dt.TableToFile(string.Concat(RutaFichero, @"output.txt"));
+                ConvertFileToTable.InsertarPadron(dt);
+            }
         }
     }
 }
