@@ -1,0 +1,44 @@
+﻿@{
+    ViewBag.Title = "Clientes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row gutter-xs">
+    <div class="col-xs-12">
+        <div id="divaccordion" class="panel-group">
+            <div class="panel panel-default filter">
+                <div class="panel-heading filterchild">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#divaccordion" href="#divfiltro" class="collapsed" aria-expanded="false">
+                            Busqueda
+                            <i class="icon icon-search pull-right"> </i>
+                        </a>
+                    </h4>
+                </div>
+                <div id="divfiltro" class="panel-collapse collapse" aria-expanded="false">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-xs-10">
+                                <input type="text" id="txt_filtro" name="txt_filtro" class="form-control" placeholder="Buscar por codigo, nombre" />
+                            </div>
+                            <div class="col-xs-2">
+                                <input type="button" id="btn_filtrar" name="btn_filtrar" value="Buscar" class="btn btn-success pull-right" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row gutter-xs">
+    <div class="col-xs-12">
+        <div class="card">
+            <div class="card-body">
+                <table id="tblcliente" class="table table-bordered table-striped table-responsive" cellspacing="0" width="100%"> 
+                    <tbody></tbody> 
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div> 

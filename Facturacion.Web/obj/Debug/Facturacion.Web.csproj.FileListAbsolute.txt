@@ -38,8 +38,10 @@ D:\EmisionFacturas\Facturacion.Web\bin\System.Web.Webpages.xml
 D:\EmisionFacturas\Facturacion.Web\bin\System.Web.Webpages.Deployment.xml
 D:\EmisionFacturas\Facturacion.Web\bin\System.Web.Webpages.Razor.xml
 D:\EmisionFacturas\Facturacion.Web\bin\System.Web.Mvc.xml
-D:\EmisionFacturas\Facturacion.Web\obj\Debug\Facturacion.Web.csprojResolveAssemblyReference.cache
 D:\EmisionFacturas\Facturacion.Web\obj\Debug\Facturacion.Web.dll
 D:\EmisionFacturas\Facturacion.Web\obj\Debug\Facturacion.Web.pdb
 D:\EmisionFacturas\Facturacion.Web\bin\Facturacion.Utilitarios.dll
 D:\EmisionFacturas\Facturacion.Web\bin\Facturacion.Utilitarios.pdb
+D:\EmisionFacturas\Facturacion.Web\obj\Debug\Facturacion.Web.csprojAssemblyReference.cache
+D:\EmisionFacturas\Facturacion.Web\obj\Debug\Facturacion.Web.csproj.CoreCompileInputs.cache
+D:\EmisionFacturas\Facturacion.Web\obj\Debug\Facturacion.Web.csproj.CopyComplete
