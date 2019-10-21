@@ -39,6 +39,7 @@
     <Compile Include="CategoriaBe.cs" />
     <Compile Include="EntidadBase.cs" />
     <Compile Include="ErrorBe.cs" />
+    <Compile Include="MenuBe.cs" />
     <Compile Include="ParametroSistemaBe.cs" />
     <Compile Include="ProductoBe.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,0 +1,56 @@
+﻿<div id="dialog_nuevo" tabindex="-1" role="dialog" class="modal in" data-backdrop="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInLeft">
+            <div class="modal-header bg-success">
+                <h4 class="modal-title" id="dialog_titulo">Producto</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">Close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="panel panel-primary" id="panel-datos-comprobante">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <a data-toggle="collapse" data-target="#collapse_cabecera" class="" aria-expanded="true">
+                                Datos del Comprobante
+                                <span class="pull-right text-muted">
+                                    <i class="icon icon-chevron-up"></i>
+                                </span>
+                            </a>
+                        </h3>
+                    </div>
+                    <div id="collapse_cabecera" class="panel-collapse collapse in" aria-expanded="true" style="">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label">Tipo Comprobante</label>
+                                        <select id="ddlb_tipocomprobante" name="ddlb_tipocomprobante" class="form-control"></select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label class="control-label">Serie</label>
+                                        <select id="ddlb_serie" name="ddlb_serie" class="form-control"></select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label class="control-label">Nro</label>
+                                        <input type="text" id="txt_nro" name="txt_nro" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button id="btn_insertar" name="btn_insertar" class="btn btn-success" type="button"><i class="icon icon-save"></i> Guardar</button>
+                <button class="btn btn-default" data-dismiss="modal" type="button">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

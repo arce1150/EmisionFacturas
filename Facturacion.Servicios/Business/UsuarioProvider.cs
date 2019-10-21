@@ -4,6 +4,7 @@ using System.Data;
 using Facturacion.Entidades;
 using Facturacion.Servicios.Interfaces;
 using Facturacion.Utilitarios;
+using System.Collections.Generic;
 
 namespace Facturacion.Servicios.Business
 {
@@ -66,6 +67,11 @@ namespace Facturacion.Servicios.Business
                         int pApellidos = dr.GetOrdinal("Apellidos");
                         int pCorreo = dr.GetOrdinal("Correo");
                         int pClave = dr.GetOrdinal("Clave");
+                        int pPerfilId = dr.GetOrdinal("PerfilId");
+                        int pPerfilStr = dr.GetOrdinal("PerfilStr");
+                        int pEmpresaId = dr.GetOrdinal("EmpresaId");
+                        int pRazonSocial = dr.GetOrdinal("RazonSocial");
+                        int pRuc = dr.GetOrdinal("Ruc");
                         if (dr.Read()) {
                             usuario = new UsuarioBe();
                             usuario.IdUsuario = dr.GetValueInt32(pIdUsuario);
@@ -74,8 +80,35 @@ namespace Facturacion.Servicios.Business
                             usuario.Apellidos = dr.GetValueString(pApellidos);
                             usuario.Correo = dr.GetValueString(pCorreo);
                             usuario.Clave = dr.GetValueString(pClave);
+                            usuario.PerfilId = dr.GetValueInt32(pPerfilId);
+                            usuario.PerfilStr = dr.GetValueString(pPerfilStr);
+                            usuario.EmpresaId = dr.GetValueInt32(pEmpresaId);
+                            usuario.RazonSocial = dr.GetValueString(pRazonSocial);
+                            usuario.Ruc=dr.GetValueString(pRuc);
+                            if (dr.NextResult()) {
+                                int pMenuId = dr.GetOrdinal("MenuId");
+                                int pNombre = dr.GetOrdinal("Nombre");
+                                int pUrl = dr.GetOrdinal("Url");
+                                int pOrden = dr.GetOrdinal("Orden");
+                                int pPerfiles = dr.GetOrdinal("Perfiles");
+                                int pMenuPadre = dr.GetOrdinal("MenuPadre");
+                                MenuBe menu = null;
+                                List<MenuBe> ListaMenu = new List<MenuBe>();
+                                while (dr.Read()) {
+                                    menu = new MenuBe();
+                                    menu.MenuId= dr.GetValueInt32(pMenuId);
+                                    menu.Nombre = dr.GetValueString(pNombre);
+                                    menu.Url = dr.GetValueString(pUrl);
+                                    menu.Orden = dr.GetValueInt16(pOrden);
+                                    menu.Perfiles = dr.GetValueString(pPerfiles);
+                                    menu.MenuPadre = dr.GetValueInt32(pMenuPadre);
+                                    ListaMenu.Add(menu);
+                                }
+                                usuario.ListMenus = ListaMenu;
+                            }
+                            dr.Close();
                         }
-                        dr.Close();
+                        
                     }
                     return usuario;
                 }

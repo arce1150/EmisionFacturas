@@ -6,7 +6,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>D:\WebSites</_PublishTargetUrl>
+    <_PublishTargetUrl>D:\Publicacion</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
     <File Include="ApplicationInsights.config">
@@ -16,13 +16,28 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/18/2019 17:52:29</publishTime>
     </File>
     <File Include="bin/Facturacion.Entidades.dll">
-      <publishTime>02/16/2019 19:58:57</publishTime>
+      <publishTime>10/19/2019 13:13:15</publishTime>
+    </File>
+    <File Include="bin/Facturacion.Entidades.pdb">
+      <publishTime>10/19/2019 13:13:15</publishTime>
     </File>
     <File Include="bin/Facturacion.Servicios.dll">
-      <publishTime>02/16/2019 19:58:58</publishTime>
+      <publishTime>10/19/2019 13:13:17</publishTime>
+    </File>
+    <File Include="bin/Facturacion.Servicios.pdb">
+      <publishTime>10/19/2019 13:13:17</publishTime>
+    </File>
+    <File Include="bin/Facturacion.Utilitarios.dll">
+      <publishTime>10/19/2019 13:13:15</publishTime>
+    </File>
+    <File Include="bin/Facturacion.Utilitarios.pdb">
+      <publishTime>10/19/2019 13:13:15</publishTime>
     </File>
     <File Include="bin/Facturacion.Web.dll">
-      <publishTime>02/16/2019 19:59:03</publishTime>
+      <publishTime>10/19/2019 13:13:25</publishTime>
+    </File>
+    <File Include="bin/Facturacion.Web.pdb">
+      <publishTime>10/19/2019 13:13:25</publishTime>
     </File>
     <File Include="bin/Microsoft.AI.Agent.Intercept.dll">
       <publishTime>01/18/2019 17:52:23</publishTime>
@@ -124,7 +139,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/19/2019 08:18:50</publishTime>
     </File>
     <File Include="Content/StyleSheet.css">
-      <publishTime>01/26/2019 22:35:08</publishTime>
+      <publishTime>03/17/2019 17:19:29</publishTime>
     </File>
     <File Include="fonts/glyphicons-halflings-regular.eot">
       <publishTime>01/18/2019 18:39:20</publishTime>
@@ -147,23 +162,44 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Scripts/application.min.js">
       <publishTime>01/26/2019 09:06:36</publishTime>
     </File>
+    <File Include="Scripts/bootbox.min.js">
+      <publishTime>03/09/2019 22:06:29</publishTime>
+    </File>
     <File Include="Scripts/demo.min.js">
       <publishTime>11/17/2017 21:58:08</publishTime>
     </File>
     <File Include="Scripts/elephant.min.js">
       <publishTime>01/19/2019 07:56:45</publishTime>
     </File>
+    <File Include="Scripts/jquery.validate.min.js">
+      <publishTime>03/09/2019 20:53:01</publishTime>
+    </File>
+    <File Include="Scripts/Utils.js">
+      <publishTime>03/10/2019 08:12:18</publishTime>
+    </File>
     <File Include="Scripts/vendor.min.js">
       <publishTime>01/19/2019 07:56:37</publishTime>
     </File>
+    <File Include="Views/Cliente/Index.cshtml">
+      <publishTime>06/20/2019 18:50:54</publishTime>
+    </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>01/26/2019 10:17:09</publishTime>
+      <publishTime>03/10/2019 13:42:16</publishTime>
     </File>
     <File Include="Views/Home/Ventas.cshtml">
       <publishTime>01/27/2019 08:37:46</publishTime>
     </File>
+    <File Include="Views/Login/Index.cshtml">
+      <publishTime>03/10/2019 13:30:37</publishTime>
+    </File>
+    <File Include="Views/Producto/Index.cshtml">
+      <publishTime>04/20/2019 15:13:53</publishTime>
+    </File>
+    <File Include="Views/Producto/_Registro.cshtml">
+      <publishTime>03/17/2019 16:14:28</publishTime>
+    </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>01/26/2019 19:29:36</publishTime>
+      <publishTime>06/20/2019 18:49:03</publishTime>
     </File>
     <File Include="Views/web.config">
       <publishTime>01/18/2019 17:51:58</publishTime>
@@ -172,7 +208,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/18/2019 18:39:13</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>02/16/2019 19:59:04</publishTime>
+      <publishTime>10/19/2019 13:17:02</publishTime>
     </File>
   </ItemGroup>
 </Project>

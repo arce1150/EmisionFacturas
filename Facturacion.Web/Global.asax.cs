@@ -11,7 +11,9 @@ namespace Facturacion.Web
     {
         protected void Application_Start()
         {
-             
+            AreaRegistration.RegisterAllAreas();
+            ViewEngines.Engines.Clear();
+            ViewEngines.Engines.Add(new RazorViewEngine());
             RouteConfig.RegisterRoutes(RouteTable.Routes);
         }
     }

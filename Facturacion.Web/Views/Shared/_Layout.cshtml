@@ -1,6 +1,8 @@
 ﻿@using Facturacion.Entidades
 @{ 
-    var usuario =(UsuarioBe)Session["LoginUsuario"];
+    var usuario = (UsuarioBe)Session["LoginUsuario"];
+    var ListaMenu = usuario.ListMenus.Where(x => x.MenuPadre == 0).OrderBy(x=>x.Nombre);
+    var ListaSubMenu = usuario.ListMenus.Where(x => ListaMenu.Select(y=>y.MenuId).ToList().Contains(x.MenuPadre.Value));
 }
 <!DOCTYPE html>
 <html>
@@ -28,7 +30,7 @@
         <div class="navbar navbar-default">
             <div class="navbar-header">
                 <a class="navbar-brand navbar-brand-center" href="javascript:void(0)">
-                    RAYSA 
+                    @usuario.RazonSocial
                 </a>
                 <button class="navbar-toggler visible-xs-block collapsed" type="button" data-toggle="collapse" data-target="#sidenav">
                     <span class="sr-only">Toggle navigation</span>
@@ -69,14 +71,14 @@
                         </li>
                         <li class="dropdown hidden-xs">
                             <button class="navbar-account-btn" data-toggle="dropdown" aria-haspopup="true">
-                                <img class="rounded" width="36" height="36" src="~/Content/img/0180441436.jpg" alt="Teddy Wilson"> @usuario.Loguin
+                                <i class="icon icon-user"></i> @usuario.Loguin
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-right"> 
                                 <li class="divider"></li>
                                 <li><a href="javascript:void(0)">Contactar</a></li>
                                 <li><a href="javascript:void(0)">Profile</a></li>
-                                <li><a href="@Url.Action("Salir","Login")">Cerrar Sessión</a></li>
+                                <li><a href="@Url.Action("Salir", "Login")">Cerrar Sessión</a></li>
                             </ul>
                         </li>
                         <li class="visible-xs-block">
@@ -103,43 +105,30 @@
                 <div class="custom-scrollbar">
                     <nav id="sidenav" class="sidenav-collapse collapse">
                         <ul class="sidenav">
-                           
-                            <li class="sidenav-heading">Menú</li>
-                            <li class="sidenav-item has-subnav">
-                                <a href="javascript:vpid(0)" aria-haspopup="true">
-                                    <span class="sidenav-icon icon icon-home"></span>
-                                    <span class="sidenav-label">Maestros</span>
-                                </a>
-                                <ul class="sidenav-subnav collapse">
-                                    <li class="sidenav-subheading">Maestros</li>
-                                    <li><a href="@Url.Content("~/Producto/Index")">Productos</a></li>
-                                    <li><a href="@Url.Content("~/Cliente/Index")">Cliente</a></li>
-                                </ul>
-                            </li>  
-                            <li class="sidenav-item has-subnav active">
-                                <a href="#" aria-haspopup="true">
-                                    <span class="sidenav-icon icon icon-briefcase"></span>
-                                    <span class="sidenav-label">Comprobantes</span>
-                                </a>
-                                <ul class="sidenav-subnav collapse">
-                                    <li class="sidenav-subheading">Comprobantes</li>
-                                    <li><a href="arrows.html">Factura</a></li>
-                                    <li><a href="arrows.html">Boleta</a></li>
-                                    <li><a href="arrows.html">Nota Débito</a></li>
-                                    <li><a href="arrows.html">Nota Crédito</a></li>
-                                </ul>
-                            </li>
-                            <li class="sidenav-item has-subnav">
-                                <a href="#" aria-haspopup="true">
-                                    <span class="sidenav-icon icon icon-edit"></span>
-                                    <span class="sidenav-label">Formmularios</span>
-                                </a>
-                                <ul class="sidenav-subnav collapse">
-                                    <li class="sidenav-subheading">Forms</li>
-                                    <li><a href="cropper.html">Cropper</a></li>
-                                </ul>
-                            </li>
 
+                            <li class="sidenav-heading">Menú</li>
+                            @{
+                                foreach (var item in ListaMenu)
+                                {
+                                    <li class="sidenav-item has-subnav">
+                                        <a href="javascript:vpid(0)" aria-haspopup="true">
+                                            <span class="sidenav-icon icon icon-home"></span>
+                                            <span class="sidenav-label">@item.Nombre</span>
+                                        </a>
+                                        <ul class="sidenav-subnav collapse">
+                                            <li class="sidenav-subheading">@item.Nombre</li>
+                                            @{
+                                                foreach (var item2 in ListaSubMenu.Where(x => x.MenuPadre == item.MenuId))
+                                                {
+                                                    <li><a href="@Url.Content(item2.Url)">@item2.Nombre</a></li>  
+                                                }
+                                            }
+
+                                        </ul>
+                                    </li>
+                                }
+
+                            }  
                         </ul>
                     </nav>
                 </div>
