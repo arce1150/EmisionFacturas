@@ -1,7 +1,10 @@
-﻿
+﻿@using Facturacion.Entidades
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var usuario = (UsuarioBe)Session["LoginUsuario"];
+    var ListaSerie = ViewBag.ListaSerie;
+    var UsuarioId = usuario.IdUsuario;
 }
 <div class="row gutter-xs">
     <div class="col-xs-12">
@@ -48,8 +51,10 @@
 }
 <script type="text/javascript" src="@Url.Content("~/Scripts/Utils.js")"></script>
 <script type="text/javascript">
-    window.onload = function () {
-        //document.getElementById("lnkAgregar").style.display = "none";
+    var _matriz = []; 
+    var VALORCOMBO = "";
+    var TEXTOCOMBO = "Seleccione";
+    window.onload = function () { 
         document.getElementById("lnkAgregar").addEventListener("click", function () {
             $("#dialog_nuevo").modal({
                 backdrop: 'static',
@@ -58,6 +63,37 @@
             });
             $("#dialog_nuevo").appendTo("body");
         },false);
-        
+        ConvertirSerie();
+        ListarComboSerie();
     };
+    function ConvertirSerie() {
+        var response = '@ListaSerie';
+        var fila = 0;
+        var filaDatos = response.split("#");
+        var nroFilas = response.length;
+        var columna = null;
+        var nroColumnas = 0;
+        for (var i = 0; i < nroFilas; i++) {
+            if (filaDatos[i] == null || typeof (filaDatos[i]) == undefined) continue;
+            columna = filaDatos[i].split("|");
+            nroColumnas = columna.length;
+            _matriz[fila] = [];
+            for (var j = 0; j < nroColumnas; j++) {
+                if (isNaN(columna[j])) _matriz[fila][j] = columna[j];
+                else _matriz[fila][j] = columna[j] * 1;
+            }
+            fila++;
+        }
+
+    }
+    function ListarComboSerie() {
+        var ddlb_serie = document.getElementById("ddlb_serie");
+        var nFilas = _matriz.length;
+        var nColumnas = _matriz[0].length;
+        var ddlb = String.Format("<option value='{0}'>{1}</option>", VALORCOMBO, TEXTOCOMBO);
+        for (var i = 1; i < nFilas; i++) {
+            ddlb += String.Format("<option value='{0}'>{1}</option>", _matriz[i][0], _matriz[i][1]);
+        }
+        ddlb_serie.innerHTML = ddlb;
+    }
 </script>

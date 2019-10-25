@@ -3,3 +3,9 @@ D:\EmisionFacturas\Facturacion.Utilitarios\bin\Debug\Facturacion.Utilitarios.pdb
 D:\EmisionFacturas\Facturacion.Utilitarios\obj\Debug\Facturacion.Utilitarios.dll
 D:\EmisionFacturas\Facturacion.Utilitarios\obj\Debug\Facturacion.Utilitarios.pdb
 D:\EmisionFacturas\Facturacion.Utilitarios\obj\Debug\Facturacion.Utilitarios.csproj.CoreCompileInputs.cache
+E:\facturacion\EmisionFacturas\Facturacion.Utilitarios\bin\Debug\Facturacion.Utilitarios.dll
+E:\facturacion\EmisionFacturas\Facturacion.Utilitarios\bin\Debug\Facturacion.Utilitarios.pdb
+E:\facturacion\EmisionFacturas\Facturacion.Utilitarios\obj\Debug\Facturacion.Utilitarios.csprojAssemblyReference.cache
+E:\facturacion\EmisionFacturas\Facturacion.Utilitarios\obj\Debug\Facturacion.Utilitarios.csproj.CoreCompileInputs.cache
+E:\facturacion\EmisionFacturas\Facturacion.Utilitarios\obj\Debug\Facturacion.Utilitarios.dll
+E:\facturacion\EmisionFacturas\Facturacion.Utilitarios\obj\Debug\Facturacion.Utilitarios.pdb

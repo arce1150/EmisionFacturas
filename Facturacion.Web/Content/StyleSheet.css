@@ -9,7 +9,7 @@ a.btn_float {
     color: #fff;
     background-color: #27ae60;
     z-index: 998;
-    top: 53px;
+    top: 50%;
 }
 
     a.btn_float:hover {

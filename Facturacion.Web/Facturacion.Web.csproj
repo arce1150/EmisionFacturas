@@ -126,7 +126,9 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\Utils.js" />
     <Content Include="Scripts\vendor.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
