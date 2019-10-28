@@ -1,8 +1,8 @@
 ﻿<div id="dialog_nuevo" tabindex="-1" role="dialog" class="modal in" data-backdrop="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content animated bounceInLeft">
             <div class="modal-header bg-success">
-                <h4 class="modal-title" id="dialog_titulo">Producto</h4>
+                <h4 class="modal-title" id="dialog_titulo">Comprobantes</h4>
                 <button type="button" class="close" data-dismiss="modal">
                     <span aria-hidden="true">×</span>
                     <span class="sr-only">Close</span>
@@ -23,13 +23,14 @@
                     <div id="collapse_cabecera" class="panel-collapse collapse in" aria-expanded="true" style="">
                         <div class="panel-body">
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label class="control-label">Tipo Comprobante</label>
                                         <select id="ddlb_tipocomprobante" name="ddlb_tipocomprobante" class="form-control"></select>
+                                        <input type="hidden" id="hdn_comprobanteid" name="hdn_comprobanteid" value="0" />
                                     </div>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label class="control-label">Serie</label>
                                         <select id="ddlb_serie" name="ddlb_serie" class="form-control"></select>
@@ -38,7 +39,38 @@
                                 <div class="col-md-2">
                                     <div class="form-group">
                                         <label class="control-label">Nro</label>
-                                        <input type="text" id="txt_nro" name="txt_nro" class="form-control" />
+                                        <input type="text" id="txt_correlativo" name="txt_correlativo" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label class="control-label">Fecha Emisión</label>
+                                        <input type="text" id="txt_fechaemision" name="txt_fechaemision" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="control-label">Tipo Documento</label>
+                                        <select id="ddlb_tipodocumento" name="ddlb_tipodocumento" class="form-control"></select>  
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        <label class="control-label">Nro. Documento</label>
+                                        <input type="text" id="txt_nrodocumentocliente" name="txt_nrodocumentocliente" onkeypress="return IsNumber(event)" class="form-control" /> 
+                                        <span class="input-group-btn alinearabajo">
+                                            <button id="btn_buscardocumento" class="btn btn-primary">
+                                                <span class="icon icon-search icon-lg"></span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label">Cliente</label>
+                                        <input type="text" id="txt_razonsocialcliente" name="txt_razonsocialcliente" class="form-control" />
                                     </div>
                                 </div>
                             </div>

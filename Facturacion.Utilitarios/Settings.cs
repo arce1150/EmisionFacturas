@@ -20,5 +20,19 @@ namespace Facturacion.Utilitarios
                 return ConfigurationManager.ConnectionStrings["conexion"].ConnectionString;
             }
         }
+        public static string ApiUrl
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["Api.Url"].ToString();
+            }
+        }
+        public static string ApiToken
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["Api.Token"].ToString();
+            }
+        }
     }
 }

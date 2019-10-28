@@ -10,6 +10,6 @@ namespace Facturacion.Entidades
         public Int16? Grupo { get; set; }
         public string NombreGrupo { get; set; }
         public string TituloGrupo { get; set; }
-         
+        public int? PadreId { get; set; }
     }
 }

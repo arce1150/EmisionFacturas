@@ -29,8 +29,8 @@ namespace Facturacion.Servicios.Business
                         int pDescripcion = dr.GetOrdinal("Descripcion"); 
                         int pGrupo = dr.GetOrdinal("Grupo");
                         int pNombreGrupo = dr.GetOrdinal("NombreGrupo");
-                        int pTituloGrupo = dr.GetOrdinal("TituloGrupo"); 
-
+                        int pTituloGrupo = dr.GetOrdinal("TituloGrupo");
+                        int pPadreId = dr.GetOrdinal("PadreId");
                         Lista = new List<ParametroSistemaBe>();
                         ParametroSistemaBe parametro = null;
                         while (dr.Read())
@@ -41,7 +41,8 @@ namespace Facturacion.Servicios.Business
                             parametro.Descripcion = dr.GetValueString(pDescripcion); 
                             parametro.Grupo = dr.GetValueInt16(pGrupo);
                             parametro.NombreGrupo = dr.GetValueString(pNombreGrupo);
-                            parametro.TituloGrupo = dr.GetValueString(pTituloGrupo);  
+                            parametro.TituloGrupo = dr.GetValueString(pTituloGrupo);
+                            parametro.PadreId = dr.GetValueNullInt32(pPadreId);
                             Lista.Add(parametro);
                         }
                         dr.Close();

@@ -1,8 +1,14 @@
-﻿
+﻿@using Facturacion.Entidades 
+@using Facturacion.Utilitarios 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
-}
+    var ListaSerie = ViewBag.ListaSerie;
+    var ListaParametro =(List<ParametroSistemaBe>)ViewBag.ListaParametro;
+    int Factura = (int)Facturacion.Utilitarios.TipoComprobante.Factura;
+    int Boleta = (int)Facturacion.Utilitarios.TipoComprobante.Boleta;
+    var json = JSON.SerializarLista(ListaParametro) ;
+}  
 <div class="row gutter-xs">
     <div class="col-xs-12">
         <div id="divaccordion" class="panel-group">
@@ -47,9 +53,17 @@
     Html.RenderPartial("_RegistroVenta");
 }
 <script type="text/javascript" src="@Url.Content("~/Scripts/Utils.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.mask.min.js")"></script>
 <script type="text/javascript">
-    window.onload = function () {
-        //document.getElementById("lnkAgregar").style.display = "none";
+    var PAGE_URL = "@Url.Content("~/Ventas")";
+    var _matriz = []; 
+    var VALORCOMBO = "-1";
+    var TEXTOCOMBO = "Seleccione";
+    var Factura = parseInt("@Factura");
+    var Boleta = parseInt("@Boleta");
+    var PARAMETROS = JSON.parse('@Html.Raw(json)'); 
+    var FacturaId = 235;
+    window.onload = function () { 
         document.getElementById("lnkAgregar").addEventListener("click", function () {
             $("#dialog_nuevo").modal({
                 backdrop: 'static',
@@ -57,7 +71,121 @@
                 show: true
             });
             $("#dialog_nuevo").appendTo("body");
-        },false);
-        
+        }, false);
+        document.getElementById("ddlb_tipocomprobante").addEventListener("change", function () {
+            ListarComboSerie();
+        }, false);
+        document.getElementById("ddlb_serie").addEventListener("change", function () {
+            ListarNumeracion();
+            ListarComboTipoDocumento();
+        }, false);  
+        document.getElementById("btn_buscardocumento").addEventListener("click", function () {
+            ConsultarNro();
+        }, false);
+        $("#txt_fechaemision").mask('00/00/0000', { placeholder: "__/__/____" });
+        ConvertirSerie();
+        ListarTipoComprobante();
     };
+    function ConvertirSerie() {
+        var response = '@ListaSerie';
+        var fila = 0;
+        var filaDatos = response.split("#");
+        var nroFilas = response.length;
+        var columna = null;
+        var nroColumnas = 0;
+        for (var i = 0; i < nroFilas; i++) {
+            if (filaDatos[i] == null || typeof (filaDatos[i]) == undefined) continue;
+            columna = filaDatos[i].split("|");
+            nroColumnas = columna.length;
+            _matriz[fila] = [];
+            for (var j = 0; j < nroColumnas; j++) {
+                if (isNaN(columna[j])) _matriz[fila][j] = columna[j];
+                else _matriz[fila][j] = columna[j] * 1;
+            }
+            fila++;
+        }
+
+    }
+    function ListarTipoComprobante() {
+        var ddlb_tipocomprobante = document.getElementById("ddlb_tipocomprobante");
+        var nFilas = _matriz.length;
+        var ddlb = String.Format("<option value='{0}'>{1}</option>", VALORCOMBO, TEXTOCOMBO);
+        var busca = -1;
+        var vector = [];
+        for (var i = 1; i < nFilas; i++) {
+            busca = _matriz[i][5];
+            if (vector.indexOf(busca)==-1) {
+                ddlb += String.Format("<option value='{0}'>{1}</option>", _matriz[i][3], _matriz[i][4]);
+            }
+            vector.push(busca);;
+        }
+        ddlb_tipocomprobante.innerHTML = ddlb;  
+        ddlb_tipocomprobante.selectedIndex = 0;
+        ListarComboSerie();
+    }
+    function ListarComboSerie() {
+        var ddlb_tipocomprobante = document.getElementById("ddlb_tipocomprobante");
+        var ddlb_serie = document.getElementById("ddlb_serie");
+        var nFilas = _matriz.length;    
+        var ddlb = String.Format("<option value='{0}'>{1}</option>", VALORCOMBO, TEXTOCOMBO); 
+        if (ddlb_tipocomprobante.value != "-1" || ddlb_tipocomprobante.value != "") {
+            for (var i = 1; i < nFilas; i++) {
+                if (_matriz[i][3] == parseInt(ddlb_tipocomprobante.value)) {
+                    ddlb += String.Format("<option value='{0}'>{1}</option>", _matriz[i][0], _matriz[i][1]);
+                } 
+            }
+        }
+        
+        ddlb_serie.innerHTML = ddlb;
+        ddlb_serie.selectedIndex = 0;
+        ListarNumeracion();
+        ListarComboTipoDocumento();
+    }
+    function ListarNumeracion() {
+        var ddlb_serie = document.getElementById("ddlb_serie");
+        var txt_correlativo = document.getElementById("txt_correlativo");
+        var nFilas = _matriz.length;
+        txt_correlativo.value = "";
+        txt_correlativo.readOnly = true;
+        if (ddlb_serie.value != "-1" || ddlb_serie.value != "") {
+            for (var i = 1; i < nFilas; i++) {
+                if (_matriz[i][0] == parseInt( ddlb_serie.value)) {
+                    txt_correlativo.value = _matriz[i][2];
+                }
+            }
+        }
+        
+    }
+    function ListarComboTipoDocumento() {
+        var lista = PARAMETROS;//.filter(x => x.PadreId==);
+        var nFilas = lista.length;
+        var ddlb_tipodocumento = document.getElementById("ddlb_tipodocumento");
+        var ddlb_serie = document.getElementById("ddlb_serie");
+        var ddlb_tipocomprobante = document.getElementById("ddlb_tipocomprobante");
+        var ddlb = String.Format("<option value='{0}'>{1}</option>", VALORCOMBO, TEXTOCOMBO);  
+        if (ddlb_serie.value != "-1") {
+            for (var i = 0; i < nFilas; i++) {
+                ddlb += String.Format("<option value='{0}'>{1}</option>", lista[i].IdParametro, lista[i].Descripcion);
+            }
+            
+        }
+        ddlb_tipodocumento.innerHTML = ddlb;
+        ddlb_tipodocumento.selectedIndex = 0;
+        ddlb_tipodocumento.disabled = false;
+        if (ddlb_tipocomprobante.value == FacturaId.toString() && ddlb_serie.value != "-1") {
+            ddlb_tipodocumento.selectedIndex = 3;
+            ddlb_tipodocumento.disabled = true;
+        } 
+    }
+    function ConsultarNro() {
+        var urlAction = PAGE_URL + '/ConsultarNro';
+        var nro = document.getElementById("txt_nrodocumentocliente").value;
+        var Param = JSON.stringify({ tipo: "ruc", nro: nro });
+        ajax(urlAction, "post", "json", function (response) {
+            if (response != "") {
+                var data = response.d;
+                console.log(data);
+            }
+        }, Param);
+    }
 </script>

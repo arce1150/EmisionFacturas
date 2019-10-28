@@ -44,6 +44,7 @@
     <Compile Include="DataReaderExtensions.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="jPagination.cs" />
+    <Compile Include="JSON.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="LogBe.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

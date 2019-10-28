@@ -21,5 +21,8 @@ namespace Facturacion.Utilitarios
         [Description("Tipo de Producto:Bien, servicio")]
         TIPOPRODUCTO_CATALOGO100 = 100
     }
-       
+    public enum TipoComprobante : int {
+        Factura=1,
+        Boleta=3
+    }   
 }

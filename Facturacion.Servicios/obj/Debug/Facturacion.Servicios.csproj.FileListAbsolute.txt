@@ -9,3 +9,14 @@ D:\EmisionFacturas\Facturacion.Servicios\bin\Debug\Facturacion.Utilitarios.pdb
 D:\EmisionFacturas\Facturacion.Servicios\obj\Debug\Facturacion.Servicios.csprojAssemblyReference.cache
 D:\EmisionFacturas\Facturacion.Servicios\obj\Debug\Facturacion.Servicios.csproj.CoreCompileInputs.cache
 D:\EmisionFacturas\Facturacion.Servicios\obj\Debug\Facturacion.Servicios.csproj.CopyComplete
+E:\facturacion\EmisionFacturas\Facturacion.Servicios\bin\Debug\Facturacion.Servicios.dll
+E:\facturacion\EmisionFacturas\Facturacion.Servicios\bin\Debug\Facturacion.Servicios.pdb
+E:\facturacion\EmisionFacturas\Facturacion.Servicios\bin\Debug\Facturacion.Entidades.dll
+E:\facturacion\EmisionFacturas\Facturacion.Servicios\bin\Debug\Facturacion.Utilitarios.dll
+E:\facturacion\EmisionFacturas\Facturacion.Servicios\bin\Debug\Facturacion.Entidades.pdb
+E:\facturacion\EmisionFacturas\Facturacion.Servicios\bin\Debug\Facturacion.Utilitarios.pdb
+E:\facturacion\EmisionFacturas\Facturacion.Servicios\obj\Debug\Facturacion.Servicios.csprojAssemblyReference.cache
+E:\facturacion\EmisionFacturas\Facturacion.Servicios\obj\Debug\Facturacion.Servicios.csproj.CoreCompileInputs.cache
+E:\facturacion\EmisionFacturas\Facturacion.Servicios\obj\Debug\Facturacion.Servicios.csproj.CopyComplete
+E:\facturacion\EmisionFacturas\Facturacion.Servicios\obj\Debug\Facturacion.Servicios.dll
+E:\facturacion\EmisionFacturas\Facturacion.Servicios\obj\Debug\Facturacion.Servicios.pdb

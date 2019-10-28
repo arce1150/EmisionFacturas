@@ -10,8 +10,17 @@ namespace Facturacion.Web.Controllers
         private List<ParametroSistemaBe> _Parametro = null;
         public ProductoController()
         {
-            _Parametro = new List<ParametroSistemaBe>();
-            _Parametro = ServiceManager<ParametroSistemaSvc>.Provider.ListarParametros();
+            UsuarioBe usuario = new UsuarioBe();
+            usuario = MetodosUtiles.ObtenerUsuario();
+            if (usuario == null)
+            {
+                RedirectToAction("Index", "Login");
+            }else
+            {
+                _Parametro = new List<ParametroSistemaBe>();
+                _Parametro = ServiceManager<ParametroSistemaSvc>.Provider.ListarParametros();
+            }
+            
         }
         // GET: Producto
         public ActionResult Index()

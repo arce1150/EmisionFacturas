@@ -43,9 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Business\FacturaProvider.cs" />
     <Compile Include="Business\ParametroSistemaProvider.cs" />
     <Compile Include="Business\ProductoProvider.cs" />
     <Compile Include="Business\UsuarioProvider.cs" />
+    <Compile Include="Interfaces\FacturaSvc.cs" />
     <Compile Include="Interfaces\ParametroSistemaSvc.cs" />
     <Compile Include="Interfaces\ProductoSvc.cs" />
     <Compile Include="Interfaces\UsuarioSvc.cs" />

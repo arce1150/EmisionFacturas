@@ -9,7 +9,7 @@ a.btn_float {
     color: #fff;
     background-color: #27ae60;
     z-index: 998;
-    top: 53px;
+    top: 50%;
 }
 
     a.btn_float:hover {
@@ -48,6 +48,24 @@ div.error{
 .selected-row {
     background:rgba(80, 167, 99, 0.55);
 }
+.text-muted {
+    color: #fefefe !important;
+}
+.panel-title {
+    cursor: pointer;
+}
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+    background-color: #f4f4f4 !important; 
+}
+.close {
+    color: #fff !important;
+    text-shadow: 0 1px 0 #fff !important;
+    opacity: .8 !important;
+    filter: alpha(opacity=80) !important;
+}
+.alinearabajo {
+    vertical-align:bottom !important;
+}
 /*@media only screen and (max-width: 990px) {
     .card-body {
         overflow-x: hidden;
@@ -57,9 +75,8 @@ div.error{
         white-space: nowrap;
     }
 }*/
-@media only screen and (max-width: 760px), (min-width: 768px) and (max-width: 1024px)  
-	{ 
-		 table.table-responsive, .table-responsive thead, .table-responsive tbody, .table-responsive th, .table-responsive td, .table-responsive tr { display: block; } 
+@media only screen and (max-width: 760px), (min-width: 768px) and (max-width: 1024px) {
+    table .table-responsive, .table-responsive thead, .table-responsive tbody, .table-responsive th, .table-responsive td, .table-responsive tr { display: block; } 
 		.table-responsive thead tr { position: absolute;top: -9999px;left: -9999px; } 
 		.table-responsive tr { border: none;margin-bottom: 8px; } 
 		.table-responsive td { border: none;border-bottom: 1px solid #d2d7d3; position: relative;padding-left: 50%;text-align:left } 
