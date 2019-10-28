@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+<<<<<<< HEAD
 using Facturacion.Entidades;
+=======
+>>>>>>> 1d36f34b2da68da34bccc406f3d97fbddfd4d44e
 using Facturacion.Servicios.Interfaces;
 namespace Facturacion.Web.Controllers
 {
     public class VentasController : Base
     {
         private string _ListaSerie;
+<<<<<<< HEAD
         private List<ParametroSistemaBe> _Parametros;
         public VentasController()
         {
@@ -26,13 +30,22 @@ namespace Facturacion.Web.Controllers
                     .Where(x=>x.Grupo==(int)Utilitarios.CatalogosSunat.TIPODOCUMENTOIDENTIDAD_CATALOGO6).ToList();
             }
             
+=======
+        public VentasController()
+        {
+            _ListaSerie=ServiceManager<FacturaSvc>.Provider.ListarSerie();
+>>>>>>> 1d36f34b2da68da34bccc406f3d97fbddfd4d44e
         }
         // GET: Ventas
         public ActionResult Index()
         {
+<<<<<<< HEAD
 
             ViewBag.ListaSerie = _ListaSerie;
             ViewBag.ListaParametro = _Parametros;
+=======
+            ViewBag.ListaSerie = _ListaSerie;
+>>>>>>> 1d36f34b2da68da34bccc406f3d97fbddfd4d44e
             return View();
         }
         public async  System.Threading.Tasks.Task<JsonResult> ConsultarNro ( string tipo,string nro ) {

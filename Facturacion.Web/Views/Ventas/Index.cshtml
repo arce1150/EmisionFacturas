@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿@using Facturacion.Entidades 
 @using Facturacion.Utilitarios 
 @{
@@ -9,6 +10,16 @@
     int Boleta = (int)Facturacion.Utilitarios.TipoComprobante.Boleta;
     var json = JSON.SerializarLista(ListaParametro) ;
 }  
+=======
+﻿@using Facturacion.Entidades
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var usuario = (UsuarioBe)Session["LoginUsuario"];
+    var ListaSerie = ViewBag.ListaSerie;
+    var UsuarioId = usuario.IdUsuario;
+}
+>>>>>>> 1d36f34b2da68da34bccc406f3d97fbddfd4d44e
 <div class="row gutter-xs">
     <div class="col-xs-12">
         <div id="divaccordion" class="panel-group">
@@ -55,6 +66,7 @@
 <script type="text/javascript" src="@Url.Content("~/Scripts/Utils.js")"></script>
 <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.mask.min.js")"></script>
 <script type="text/javascript">
+<<<<<<< HEAD
     var PAGE_URL = "@Url.Content("~/Ventas")";
     var _matriz = []; 
     var VALORCOMBO = "-1";
@@ -63,6 +75,11 @@
     var Boleta = parseInt("@Boleta");
     var PARAMETROS = JSON.parse('@Html.Raw(json)'); 
     var FacturaId = 235;
+=======
+    var _matriz = []; 
+    var VALORCOMBO = "";
+    var TEXTOCOMBO = "Seleccione";
+>>>>>>> 1d36f34b2da68da34bccc406f3d97fbddfd4d44e
     window.onload = function () { 
         document.getElementById("lnkAgregar").addEventListener("click", function () {
             $("#dialog_nuevo").modal({
@@ -71,6 +88,7 @@
                 show: true
             });
             $("#dialog_nuevo").appendTo("body");
+<<<<<<< HEAD
         }, false);
         document.getElementById("ddlb_tipocomprobante").addEventListener("change", function () {
             ListarComboSerie();
@@ -85,6 +103,11 @@
         $("#txt_fechaemision").mask('00/00/0000', { placeholder: "__/__/____" });
         ConvertirSerie();
         ListarTipoComprobante();
+=======
+        },false);
+        ConvertirSerie();
+        ListarComboSerie();
+>>>>>>> 1d36f34b2da68da34bccc406f3d97fbddfd4d44e
     };
     function ConvertirSerie() {
         var response = '@ListaSerie';
@@ -106,6 +129,7 @@
         }
 
     }
+<<<<<<< HEAD
     function ListarTipoComprobante() {
         var ddlb_tipocomprobante = document.getElementById("ddlb_tipocomprobante");
         var nFilas = _matriz.length;
@@ -187,5 +211,16 @@
                 console.log(data);
             }
         }, Param);
+=======
+    function ListarComboSerie() {
+        var ddlb_serie = document.getElementById("ddlb_serie");
+        var nFilas = _matriz.length;
+        var nColumnas = _matriz[0].length;
+        var ddlb = String.Format("<option value='{0}'>{1}</option>", VALORCOMBO, TEXTOCOMBO);
+        for (var i = 1; i < nFilas; i++) {
+            ddlb += String.Format("<option value='{0}'>{1}</option>", _matriz[i][0], _matriz[i][1]);
+        }
+        ddlb_serie.innerHTML = ddlb;
+>>>>>>> 1d36f34b2da68da34bccc406f3d97fbddfd4d44e
     }
 </script>

@@ -1,1 +1,8 @@
 Web.config
+*.suo
+*.dll
+*.pdb
+*.cache
+*.txt
+*.ide-wal
+*.ide

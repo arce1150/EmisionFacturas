@@ -9,4 +9,7 @@ E:\facturacion\EmisionFacturas\Facturacion.Utilitarios\obj\Debug\Facturacion.Uti
 E:\facturacion\EmisionFacturas\Facturacion.Utilitarios\obj\Debug\Facturacion.Utilitarios.csproj.CoreCompileInputs.cache
 E:\facturacion\EmisionFacturas\Facturacion.Utilitarios\obj\Debug\Facturacion.Utilitarios.dll
 E:\facturacion\EmisionFacturas\Facturacion.Utilitarios\obj\Debug\Facturacion.Utilitarios.pdb
+<<<<<<< HEAD
 D:\EmisionFacturas\Facturacion.Utilitarios\obj\Debug\Facturacion.Utilitarios.csprojAssemblyReference.cache
+=======
+>>>>>>> 1d36f34b2da68da34bccc406f3d97fbddfd4d44e
