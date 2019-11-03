@@ -39,6 +39,7 @@ namespace Facturacion.ServicioWindows
             }
             catch (Exception ex)
             {
+                throw ex;
             }
         }
         public void EjecutarServicio()

@@ -23,6 +23,9 @@ namespace Facturacion.Utilitarios
     }
     public enum TipoComprobante : int {
         Factura=1,
-        Boleta=3
+        Boleta=3,
+        FacturaId= 235,
+        ValorDNI= 128,
+        ValorRUC= 130
     }   
 }

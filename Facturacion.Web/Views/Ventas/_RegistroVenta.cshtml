@@ -48,18 +48,24 @@
                                         <input type="text" id="txt_fechaemision" name="txt_fechaemision" class="form-control" />
                                     </div>
                                 </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label class="control-label">Fecha Vencto.</label>
+                                        <input type="text" id="txt_vencimiento" name="txt_vencimiento" class="form-control" />
+                                    </div>
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label class="control-label">Tipo Documento</label>
-                                        <select id="ddlb_tipodocumento" name="ddlb_tipodocumento" class="form-control"></select>  
+                                        <select id="ddlb_tipodocumento" name="ddlb_tipodocumento" class="form-control"></select>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="input-group">
                                         <label class="control-label">Nro. Documento</label>
-                                        <input type="text" id="txt_nrodocumentocliente" name="txt_nrodocumentocliente" onkeypress="return IsNumber(event)" class="form-control" /> 
+                                        <input type="text" id="txt_nrodocumentocliente" name="txt_nrodocumentocliente" onkeypress="return IsNumber(event)" class="form-control" maxlength="15" />
                                         <span class="input-group-btn alinearabajo">
                                             <button id="btn_buscardocumento" class="btn btn-primary">
                                                 <span class="icon icon-search icon-lg"></span>
@@ -70,10 +76,59 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="control-label">Cliente</label>
-                                        <input type="text" id="txt_razonsocialcliente" name="txt_razonsocialcliente" class="form-control" />
+                                        <input type="text" id="txt_razonsocialcliente" name="txt_razonsocialcliente" data-value="" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label class="control-label">Tipo Operación</label>
+                                        <select id="ddlb_tipooperacion" name="ddlb_tipooperacion" class="form-control"></select>
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="control-label">Moneda</label>
+                                        <select id="ddlb_moneda" name="ddlb_moneda" class="form-control"></select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <a data-toggle="collapse" data-target="#collapse_items" class="" aria-expanded="true">
+                                Ítems del Comprobante
+                                <span class="pull-right text-muted">
+                                    <i class="icon icon-chevron-up"></i>
+                                </span>
+                            </a>
+                        </h3>
+                    </div>
+                    <div id="collapse_items" class="panel-collapse collapse in" aria-expanded="true" style="">
+                        <div class="panel-body">
+                            <div class="row">
+                                <input type="button" id="btn_agregarproducto" value="Agregar" class="btn btn-primary pull-right" />
+                            </div>
+                            <div class="row gutter-xs">
+                                <div class="col-xs-12">
+                                    <table id="tbldetalle" class="table table-bordered table-striped table-responsive" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Producto</th>
+                                                <th>Unidad</th>
+                                                <th>Cantidad</th>
+                                                <th>Precio</th>
+                                                <th>Subtotal</th>
+                                                <th>Acción</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div> 
                         </div>
                     </div>
                 </div>

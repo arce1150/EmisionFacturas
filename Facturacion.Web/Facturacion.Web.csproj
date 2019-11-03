@@ -164,6 +164,7 @@
     <Content Include="Views\Cliente\Index.cshtml" />
     <Content Include="Views\Ventas\Index.cshtml" />
     <Content Include="Views\Ventas\_RegistroVenta.cshtml" />
+    <Content Include="Views\Ventas\_FiltroProductos.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -207,9 +208,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>44743</DevelopmentServerPort>
+          <DevelopmentServerPort>447</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:44743/</IISUrl>
+          <IISUrl>http://localhost:447/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

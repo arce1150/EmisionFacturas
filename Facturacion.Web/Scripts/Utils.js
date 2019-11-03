@@ -70,12 +70,203 @@ function ajax(url, tipoMetodo, tipoRpta, metodo, parametrosUrl) {
             else {
                 metodo(xhr.response);
             }
+        } else { 
+            toastr["warning"]("Ha ocurrido un error en el sistema " + xhr.status);
+            waitingDialog.hide();
         }
     }
     if (tipoMetodo == "post") {
         xhr.send(parametrosUrl);
     } else {
         xhr.send();
+    }
+}
+function ValidacionFormularios() {
+    this.RegVacio = /^\s*$/;
+    this.FechaValida= /^(((0[1-9]|[12]\d|3[01])\/(0[13578]|1[02])\/((19|[2-9]\d)\d{2}))|((0[1-9]|[12]\d|30)\/(0[13456789]|1[012])\/((19|[2-9]\d)\d{2}))|((0[1-9]|1\d|2[0-8])\/02\/((19|[2-9]\d)\d{2}))|(29\/02\/((1[6-9]|[2-9]\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))))$/g; 
+    this.trim = function (IdInputText) {
+        var o = document.getElementById(IdInputText).value
+        return o.replace(/^\s+|\s+$/g, "");
+    };
+    this.ValidarFecha = function (inputId) {
+        var flagerror = true;
+        var o = document.getElementById(inputId).value;
+        el = document.getElementById(inputId);
+        el.classList.remove("error"); 
+        if (this.RegVacio.test(o)) {
+            flagerror = false;
+            document.getElementById(inputId).className += " error";
+            return flagerror;
+        }
+        if (!this.FechaValida.test(o)) {
+            flagerror = false;
+            document.getElementById(inputId).className += " error";
+            return flagerror;
+        }
+        return flagerror;
+    };
+    this.EsComboRequerido = function (IdCombo) {
+        var flagerror = true;
+        var o = document.getElementById(IdCombo).value;
+        if (document.getElementById(IdCombo).classList.length > 0) document.getElementById(IdCombo).classList.remove("error");
+        if (o == "-1" || o == "0" || o == "" || typeof (o) == undefined || o == null || this.RegVacio.test(o)) {
+            document.getElementById(IdCombo).className += " error";
+            flagerror = false;
+        }
+        return flagerror;
+    };
+    this.EsCampoRequerido = function (IdInputText) {
+        var flagerror = true;
+        var o = document.getElementById(IdInputText);
+        if (o.value == "" || typeof (o.value) == undefined || o.value == null || this.RegVacio.test(o.value)) {
+            o.className += " error";
+            flagerror = false;
+        }
+        return flagerror;
+    };
+    this.SubirArchivo = function (IdInputFile, Index) {
+        var o = document.getElementById(IdInputFile);
+        var extesion = [];
+        var NombreArchivo = null;
+        var n = 0;
+        var tamanio = 0;
+        if (o === null) o = document.getElementsByName(IdInputFile.name)[Index];
+        if (o.classList.length > 0) o.classList.remove("error");
+        if (o.value.length > 0) {
+            NombreArchivo = o.value;
+            extesion = NombreArchivo.split(".");
+            n = extesion.length;
+            tamanio = o.files[0].size;
+            if (ARCHIVOSPERMITIDOS.split("|").indexOf(extesion[n - 1].toString().toLowerCase()) > 0) {
+                o.value = "";
+                o.classList.add("error");
+                //bootbox.alert({
+                //    message: "No se permite subir éste tipo de archivos",
+                //    size: 'small'
+                //});
+                return false;
+            }
+            if (tamanio > UPLOADMAXIMO) {
+                o.value = "";
+                o.classList.add("error");
+                //bootbox.alert({
+                //    message: "El archivo excede los "+ (UPLOADMAXIMO/1024)+" mb",
+                //    size: 'small'
+                //});
+                return false;
+            }
+            var Archivo = o.files[0];
+            var formData = new FormData();
+            formData.append("Archivo", Archivo);
+            $.ajax({
+                type: "post",
+                url: BASE_URLHOME + "/SubirArchivos",
+                data: formData,
+                contentType: false,
+                processData: false,
+                async: false,
+                success: function (response) {
+                    var ObjArchivo = response.d;
+                    document.getElementById(IdInputFile).setAttribute("data-value", ObjArchivo.HasArchivo);
+                    return true;
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log("Error en la funcion SubirArchivo : " + xhr.status.toString() + "\n" + thrownError.toString());
+                }
+            });
+        }
+        return true;
+
+    };
+    this.RemoverClassModal = function (IdDiv) {
+        //var form = $("#" + IdDiv + " .form-control");
+        var form = document.getElementById(IdDiv).getElementsByClassName("form-control");
+        var NroElementos = form.length;
+        var clase = null; var IdElemento = null;
+        var el = null, hijos = null, len = 0, ind = 0, nextEl = null;
+        for (var i = 0; i < NroElementos; i++) {
+            try {
+                clase = form[i].classList;
+                if (typeof (form[i].id) !== undefined && form[i].id !== "") {
+                    IdElemento = form[i].id;
+                    el = document.getElementById(IdElemento);
+                    el.classList.remove("error"); 
+                    nextEl = el.parentElement.getElementsByTagName("span");
+                    len = nextEl.length;
+                    for (var x = 0; x < len; x++) {
+                        if (nextEl[x].classList.contains("error")) {
+                            nextEl[x].remove(); break;
+                        }
+                    }
+                }
+                else if (clase.length !== 0) {
+                    form[i].classList.remove("error");
+                }
+
+
+            } catch (err) {
+                //console.log("Elemento:" + i);
+            }
+        }
+    };
+    this.ImprimirMensajeError = function (ElemetoId, MensajeError) {
+        var Tipoelemento = document.getElementById(ElemetoId);
+        var ElementoPadre = null;
+        var spanError = document.createElement("span");
+        spanError.setAttribute("class", "error");
+        spanError.innerHTML = MensajeError;
+        if (Tipoelemento.type === "text" || Tipoelemento.type === "select-one" || Tipoelemento.type === "file"
+            || Tipoelemento.type === "textarea" || Tipoelemento.type === "select-multiple") {
+            //$("#" + ElemetoId).after("<span class='error'>" + MensajeError + "</span>"); 
+            ElementoPadre = document.getElementById(ElemetoId).parentNode;
+            ElementoPadre.appendChild(spanError);
+        } else if (Tipoelemento.type === "radio") {
+            //$("#" + ElemetoId).parent().after("<span class='error'>" + MensajeError + "</span>");
+            ElementoPadre = document.getElementById(ElemetoId).parentNode;
+            ElementoPadre.appendChild(spanError);
+        }
+
+    };
+    this.ValidaLongitudCadena = function (InputText, min, max) {
+        var flagerror = true;
+        var o = document.getElementById(InputText);
+        if ((o.value.length > max || o.value.length < min) || o.value === null || this.RegVacio.test(o.value)) {
+            o.classList.add("error");
+            flagerror = false;
+        }
+        return flagerror;
+    };
+    this.ArchivoPermitido = function (IdInputFile, Index) {
+        var o = document.getElementById(IdInputFile);
+        var extesion = [];
+        var NombreArchivo = null;
+        var n = 0;
+        var flagerror = true;
+        if (o === null) o = document.getElementsByName(IdInputFile.name)[Index];
+        if (o.value.length > 0) {
+            NombreArchivo = o.value;
+            extesion = NombreArchivo.split(".");
+            n = extesion.length;
+            if (ARCHIVOSPERMITIDOS.split("|").indexOf(extesion[n - 1].toString().toLowerCase()) > 0) {
+                o.value = "";
+                flagerror = false;
+            }
+        }
+        return flagerror;
+    };
+    this.TamanioPermitido = function (IdInputFile, Index) {
+        var flagerror = true;
+        var o = document.getElementById(IdInputFile);
+        var tamanio = 0;
+        if (o === null) o = document.getElementsByName(IdInputFile.name)[Index];
+        if (o.value.length > 0) {
+            tamanio = o.files[0].size;
+            if (tamanio > UPLOADMAXIMO) {
+                o.value = "";
+                flagerror = false;
+            }
+        }
+        return flagerror;
     }
 }
 var waitingDialog = waitingDialog || (function ($) {
